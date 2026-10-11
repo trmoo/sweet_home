@@ -72,7 +72,7 @@ h1.title{font-family:"Gowun Batang",serif;font-weight:700;font-size:clamp(26px,5
 .card.gold{border-color:var(--gold);background:var(--gold-soft)}
 .card p{margin:0}
 .card .row{display:flex;flex-wrap:wrap;gap:8px}
-.card input{flex:1;min-width:140px;font:inherit;font-size:14px;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--paper);color:var(--ink)}
+.card .row input{flex:1;min-width:140px;font:inherit;font-size:14px;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--paper);color:var(--ink)}
 .btn{font-size:14px;border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:8px;padding:7px 14px;cursor:pointer}
 .btn.pri{background:var(--ink);color:var(--paper);border-color:var(--ink)}
 
@@ -91,8 +91,9 @@ li.item{display:grid;grid-template-columns:28px 1fr auto;gap:4px 10px;padding:12
 li.item > input{width:20px;height:20px;margin:2px 0 0;accent-color:var(--sage);cursor:pointer}
 li.item label{cursor:pointer}
 .t{font-weight:500}
-.note{grid-column:2/4;font-size:13px;color:var(--muted)}
-.who{grid-column:2/4;font-size:12px;color:var(--sage)}
+.note{font-size:13px;color:var(--muted)}
+.who{font-size:12px;color:var(--sage)}
+li.item .note, li.item .who{grid-column:2/4}   /* 할 일 줄에서만 — 계약 카드·예산 줄도 grid 라 칸이 밀린다 */
 .tag{display:inline-block;font-size:11px;font-weight:600;color:var(--gold);border:1px solid var(--gold);border-radius:4px;padding:0 5px;margin-left:6px;vertical-align:2px}
 .tag.t1{color:var(--sage);border-color:var(--sage)}
 .tag.t2{color:var(--muted);border-color:var(--muted)}
@@ -112,6 +113,109 @@ form.add input{flex:1;min-width:0;font:inherit;font-size:14px;padding:8px 10px;b
 .foot p{margin:0}
 .restore{border:0;background:none;color:var(--gold);font-size:12.5px;text-decoration:underline;cursor:pointer;padding:0}
 .toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--paper);padding:9px 16px;border-radius:99px;font-size:13.5px;box-shadow:0 4px 18px rgba(0,0,0,.18);z-index:9;max-width:calc(100% - 32px)}
+/* 탭 */
+.tabs{display:flex;flex-wrap:wrap;gap:6px}
+.tabs button{border:1px solid var(--line);background:var(--paper);color:var(--muted);border-radius:99px;padding:7px 14px;font-size:14px;cursor:pointer}
+.tabs button[aria-selected="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.filters{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.mini{font-size:12.5px;color:var(--muted);margin:10px 0 0}
+.mini.empty{margin-top:22px;font-size:14px}
+.restore-line{margin-top:24px}
+.card.warnc{border-color:var(--warn);background:var(--warn-soft)}
+.card-h{font-weight:600;margin:0}
+
+/* 기록 입력 칸 */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px 10px}
+.fld{display:grid;gap:3px;font-size:12.5px;color:var(--muted);align-content:start}
+.fld.wide{grid-column:1/-1}
+.fld input{font:inherit;font-size:14px;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--paper);color:var(--ink);width:100%;min-width:0}
+.fld .hint{font-size:12px;color:var(--sage);min-height:1.2em}
+.fld .hint.bad{color:var(--warn)}
+.chk{display:flex;align-items:center;gap:8px;font-size:14px;color:var(--ink);padding-top:18px}
+.chk input{width:18px;height:18px;accent-color:var(--sage)}
+form.edrec{display:grid;gap:8px;margin-top:6px}
+li.ev form.edrec, li.pay form.edrec{grid-column:1/-1}
+
+/* 📅 일정 */
+.month{font-family:"Gowun Batang",serif;font-size:19px;margin:28px 0 4px;padding-bottom:6px;border-bottom:2px solid var(--ink)}
+ul.evs{list-style:none;margin:0;padding:0}
+ul.evs.past{opacity:.7}
+li.ev{display:grid;grid-template-columns:54px 1fr auto;gap:4px 12px;padding:12px 4px;border-bottom:1px solid var(--line);align-items:start}
+.dbox{text-align:center;border:1px solid var(--line);border-radius:10px;padding:4px 0;background:var(--paper)}
+.dbox b{display:block;font-family:"Gowun Batang",serif;font-size:21px;line-height:1.15}
+.dbox span{font-size:11px;color:var(--muted)}
+li.ev.paydue .dbox{border-color:var(--gold)}
+li.ev.wed .dbox{background:var(--gold-soft);border-color:var(--gold)}
+li.ev.wed .ev-t{font-family:"Gowun Batang",serif;font-size:17px}
+.ev-t{font-weight:500}
+.ev-s{font-size:13px;color:var(--muted)}
+.badge{display:inline-block;font-size:11.5px;font-weight:600;padding:1px 7px;border-radius:99px;background:var(--line);color:var(--muted);margin-left:8px;vertical-align:1px}
+.badge.now{background:var(--gold-soft);color:var(--gold)}
+.badge.late{background:var(--warn-soft);color:var(--warn)}
+
+/* 💰 계약·지출 */
+.sum{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:16px}
+/* 줄마다 따로 칸을 재면 이름 길이에 따라 막대 시작점이 달라진다 — 한 격자를 함께 쓴다 */
+.who-bars{display:grid;grid-template-columns:auto 1fr auto;gap:8px 10px;align-items:center;font-size:14px}
+.wb{display:contents}
+.wb .track{height:10px;background:var(--line);border-radius:5px;overflow:hidden}
+.wb .track i{display:block;height:100%;background:var(--sage)}
+.wb b{font-variant-numeric:tabular-nums;font-size:13.5px}
+ul.soon{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+ul.soon li{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:baseline;font-size:14px}
+ul.soon b{font-variant-numeric:tabular-nums}
+.add-ct{margin-top:18px}
+section.ct{margin-top:14px}
+.ct-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px}
+.ct-head .tag{margin-left:0}
+.ct-head h3{font-size:17px;margin:0}
+.ct-v{font-size:13px;color:var(--muted)}
+.ct-head .acts{margin-left:auto}
+.ct-nums{display:flex;flex-wrap:wrap;gap:4px 18px;font-size:13.5px;color:var(--muted)}
+.ct-nums b{color:var(--ink);font-variant-numeric:tabular-nums}
+ul.pays{list-style:none;margin:0;padding:0;border-top:1px dashed var(--line)}
+li.pay{display:grid;grid-template-columns:26px 1fr auto;gap:2px 10px;padding:9px 2px;border-bottom:1px dashed var(--line);align-items:center}
+li.pay > input[type=checkbox]{width:18px;height:18px;accent-color:var(--sage);margin:0}
+.pay-m{display:flex;flex-wrap:wrap;gap:2px 10px;align-items:baseline}
+.pay-m b{font-variant-numeric:tabular-nums}
+.pay-s{font-size:12.5px;color:var(--muted)}
+li.pay.paid .pay-m b{color:var(--sage)}
+.warn-t{color:var(--warn)}
+.lnk.armed{color:var(--warn);font-weight:600}
+.fld select{font:inherit;font-size:14px;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--paper);color:var(--ink);width:100%;min-width:0}
+.wb-sub{grid-column:1/-1;font-size:12.5px;color:var(--muted);margin:-4px 0 4px}
+.stat.over b,.stat.over span{color:var(--warn)}
+.bar.over i{background:var(--warn)}
+.ok-t{color:var(--sage)}
+.lead{font-size:13.5px;margin-top:16px}
+
+/* 📊 예산 */
+.bsec .month .sub{font-family:"IBM Plex Sans KR",system-ui,sans-serif;font-size:12.5px;color:var(--muted);font-weight:400;margin-left:10px}
+.mid{margin-top:14px}
+.mid-h{display:flex;align-items:baseline;gap:4px 10px;flex-wrap:wrap;padding:4px 2px;border-bottom:1px solid var(--line)}
+.mid-h b{font-size:15px}
+.mid-s{font-size:12.5px;color:var(--muted)}
+.mid-h .lnk{margin-left:auto}
+ul.bls{list-style:none;margin:0;padding:0}
+li.bl{display:grid;grid-template-columns:1fr 120px;gap:2px 10px;padding:7px 2px;border-bottom:1px dashed var(--line);align-items:center}
+.bl-n{border:0;background:none;padding:4px 0;text-align:left;font-size:14.5px;color:var(--ink);cursor:pointer}
+.bl-n small{color:var(--muted)}
+.caret{display:inline-block;width:1.1em;color:var(--muted)}
+.cell{font:inherit;font-size:14px;text-align:right;padding:6px 8px;border:1px solid var(--line);border-radius:8px;background:var(--paper);color:var(--ink);width:100%;min-width:0;font-variant-numeric:tabular-nums}
+.cell:focus{border-color:var(--gold)}
+.bl-s{grid-column:1/-1;font-size:12.5px;color:var(--muted);padding-left:1.1em}
+li.bl.over .cell{border-color:var(--warn)}
+.bl-d{grid-column:1/-1;display:grid;gap:8px;padding:6px 0 8px 1.1em}
+li.bl > form.edrec{grid-column:1/-1}
+form.addline{padding:10px 0}
+@media (max-width:520px){
+  li.bl{grid-template-columns:1fr 104px}
+  li.ev{grid-template-columns:48px 1fr}
+  li.ev > .acts{grid-column:2}
+  .ct-head .acts{margin-left:0}
+  li.pay{grid-template-columns:26px 1fr}
+  li.pay > .acts{grid-column:2}
+}
 :focus-visible{outline:2px solid var(--gold);outline-offset:2px}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
@@ -142,7 +246,7 @@ var pw = null;                // 지금 쓰는 비밀번호 (서버가 매번 �
 var me = lsGet(K.name) || '';
 var srv = null;               // 서버가 마지막으로 보내 준 상태
 var queue = loadQueue();      // 아직 서버에 못 보낸 변경
-var view = lsGet(K.view) || 'all';
+var view_ = lsGet(K.view) || 'all';   // 할 일 보기 거르개 (view() 함수와 이름이 겹치지 않게)
 var editing = null;           // 고치고 있는 할 일 아이디
 var editBase = null;          // 고치기를 열 때의 글 — 그사이 상대가 고쳤는지 알아보려고
 var busy = false;             // 서버와 주고받는 중
@@ -152,6 +256,22 @@ var net = 'ok';               // ok | busy | off
 var lastOk = 0;
 var askName = false;
 var session = 0;              // 잠글 때마다 늘린다 — 잠근 뒤 늦게 온 응답은 버린다
+var again = false;            // 주고받는 동안 또 하라는 요청이 왔다
+var TABS = [['todo', '✅ 할 일'], ['plan', '📅 일정'], ['budget', '📊 예산'], ['money', '📝 계약']];
+var tab = ((location.hash || '').match(/^#(todo|plan|budget|money)$/) || [])[1] || lsGet('sh-tab') || 'todo';
+if (!TABS.some(function (t) { return t[0] === tab; })) tab = 'todo';
+var editRec = null;           // 고치고 있는 기록 { c, id, mt }
+var addPayFor = null;         // 지불 더하기 칸을 연 계약 아이디
+var addCtOpen = false;        // 계약 더하기 칸을 열었나
+var showPast = false;         // 지난 일정 펼치기
+var armed = null;             // 「한 번 더 누르면 지워집니다」 상태 { key, until }
+var openLines = {};          // 예산표에서 펼쳐 둔 항목
+var addPayBud = null;         // 지출 적기 칸을 연 예산 항목 아이디
+var addLineFor = null;        // 항목 더하기 칸 — '대분류|중분류' 또는 '*'(새 분류)
+var touched = {};             // 고치기 칸 가운데 사람이 손댄 칸 아이디 — 이 칸만 저장하고, 나머지는 상대가 고친 값을 따른다
+var drafts = {};              // 다른 탭에 다녀와도 더하기 칸에 적다 만 글이 남게
+var lastDay = '';             // 마지막으로 그린 날 — 자정을 넘기면 다시 그린다
+var rendering = false;        // render() 가 화면을 갈아 끼우는 중
 
 function loadQueue() {
   try { var q = JSON.parse(lsGet(K.queue) || '[]'); return Array.isArray(q) ? q : []; } catch (e) { return []; }
@@ -160,34 +280,63 @@ function saveQueue() { if (queue.length) lsSet(K.queue, JSON.stringify(queue)); 
 
 // ==== 공유 규칙 시작 — index.html 에 똑같은 글자로 들어 있다. 고치면 두 곳을 함께 고칠 것 ====
 /**
- * 변경 목록(ops)을 할 일 목록(items)에 적용한다. 바뀐 것이 있으면 true.
+ * 변경 목록(ops)을 적용한다. 바뀐 것이 있으면 true.
  * 같은 변경을 두 번 적용해도 결과가 같다 — 연결이 끊겼다가 다시 보내도 안전하다.
+ * 할 일(items)
  *   { k:'done', id, v }       체크 / 체크 풀기
  *   { k:'edit', id, t, n }    할 일·도움말 고치기
  *   { k:'del', id }           직접 더한 것은 지우고, 기본 항목은 숨긴다
  *   { k:'add', id, p, t, n }  할 일 더하기 (아이디는 화면이 만든다: u + 영숫자)
  *   { k:'restoreAll' }        숨긴 기본 항목 모두 되살리기
  *   { k:'revertAll' }         고친 기본 항목 모두 처음 글로
+ * 기록(recs) — 일정 ev · 예산 항목 bud · 계약 ct · 지출(지불) pay
+ *   { k:'put', c, id, f, nw:1 }  새로 넣기 — 그 아이디가 아직 없을 때만 (다시 보내도 나중에 고친 값을 덮지 않는다)
+ *   { k:'put', c, id, f }        고치기 — 그 아이디가 있을 때만, f 에 들어 있는 칸만 바꾼다
+ *                                (두 사람이 같은 기록의 다른 칸을 동시에 고쳐도 둘 다 남고,
+ *                                 상대가 방금 지운 기록을 고쳐도 반쯤 빈 기록으로 되살아나지 않는다)
+ *   { k:'drop', c, id }       지우기 — 계약을 지우면 그 계약의 지출도 함께 지운다.
+ *                             예산 항목을 지우면 거기 걸린 계약·지출은 지우지 않고 「항목 없음」으로 풀어 둔다(돈 기록은 남긴다)
+ * 지출(pay)은 계약(ct)에 붙거나, 계약 없이 예산 항목(bud)에 바로 붙는다 — 새로 넣을 때는 둘 중 하나를 골라야 한다.
+ * 고른 예산 항목이 그사이 지워졌으면 지출은 버리지 않고 「붙을 곳 없음」으로 남긴다(예산 항목 지우기와 같다).
+ * 고른 계약이 지워졌으면 받지 않는다 — 계약을 지우면 그 지출도 함께 지우므로, 같은 묶음을 다시 보내도 결과가 같게.
+ * 이미 있는 기록을 고칠 때는 고친 칸만 다시 따진다 — 붙을 곳 없는 지출도 「냈음」·금액은 고칠 수 있다.
+ * dirty 에는 바뀐 묶음 이름(items·ev·bud·ct·pay)이 true 로 표시된다 — 서버가 그 시트만 다시 쓴다.
  */
-function applyOps_(items, phases, ops, who, now) {
+var REC_SCHEMA = {
+  ev:  [['date', 'date', 1], ['time', 'time', 0], ['title', 't80', 1], ['place', 't80', 0], ['memo', 't300', 0]],
+  bud: [['big', 't20', 0], ['mid', 't20', 0], ['name', 't40', 1], ['plan', 'won', 0], ['memo', 't200', 0]],
+  ct:  [['bud', 'ref:bud', 0], ['name', 't80', 1], ['vendor', 't60', 0], ['date', 'date', 0], ['total', 'won', 0],
+        ['memo', 't300', 0]],
+  pay: [['ct', 'ref:ct', 0], ['bud', 'ref:bud', 0], ['label', 't40', 0], ['amount', 'won', 1], ['date', 'date', 0],
+        ['paid', 'bool', 0], ['by', 't20', 0], ['memo', 't100', 0]]
+};
+
+function applyOps_(items, phases, ops, who, now, recs, dirty) {
+  recs = recs || {};
+  dirty = dirty || {};
   var changed = false;
   var byId = {};
   var i;
   for (i = 0; i < items.length; i++) byId[items[i].id] = items[i];
   var phaseOk = {};
   for (i = 0; i < phases.length; i++) phaseOk[phases[i].id] = true;
-  function stamp(x) { x.mt = now; x.mb = who; changed = true; }
+  function touch() { changed = true; dirty.items = true; }
+  function stamp(x) { x.mt = now; x.mb = who; touch(); }
 
   for (i = 0; i < ops.length; i++) {
     var op = ops[i];
     if (!op || typeof op !== 'object') continue;
+    if (op.k === 'put' || op.k === 'drop') {
+      if (applyRec_(recs, dirty, op, who, now)) changed = true;
+      continue;
+    }
     var it = (typeof op.id === 'string' && Object.prototype.hasOwnProperty.call(byId, op.id)) ? byId[op.id] : null;
     if (op.k === 'done') {
       if (!it) continue;
       var v = op.v === true;
       if (it.done === v) continue;
       it.done = v; it.by = v ? who : ''; it.at = v ? now : 0;
-      changed = true;
+      touch();
     } else if (op.k === 'edit') {
       if (!it) continue;
       var t = clip_(op.t, 120), n = clip_(op.n, 300);
@@ -199,7 +348,7 @@ function applyOps_(items, phases, ops, who, now) {
       if (it.mine) {
         items.splice(items.indexOf(it), 1);
         delete byId[it.id];
-        changed = true;
+        touch();
       } else if (!it.hid) {
         it.hid = true; it.done = false; it.by = ''; it.at = 0;
         stamp(it);
@@ -215,7 +364,7 @@ function applyOps_(items, phases, ops, who, now) {
                  hid: false, mine: true, ot: '', on: '', mt: now, mb: who };
       items.push(nw);
       byId[nw.id] = nw;
-      changed = true;
+      touch();
     } else if (op.k === 'restoreAll') {
       for (j = 0; j < items.length; j++) if (!items[j].mine && items[j].hid) { items[j].hid = false; stamp(items[j]); }
     } else if (op.k === 'revertAll') {
@@ -228,10 +377,95 @@ function applyOps_(items, phases, ops, who, now) {
   return changed;
 }
 
-/** 글자로 바꾸고, 줄바꿈·제어 문자를 빈칸으로, 앞뒤 공백을 떼고, 길이를 자른다 */
+/** 기록 하나 넣기·고치기·지우기. 바뀌면 true */
+function applyRec_(recs, dirty, op, who, now) {
+  var c = op.c;
+  if (typeof c !== 'string' || !Object.prototype.hasOwnProperty.call(REC_SCHEMA, c)) return false;
+  if (typeof op.id !== 'string' || !/^u[0-9a-z]{4,24}$/.test(op.id)) return false;
+  var list = recs[c] || (recs[c] = []);
+  var at = -1, q;
+  for (q = 0; q < list.length; q++) if (list[q].id === op.id) { at = q; break; }
+  if (op.k === 'drop') {
+    if (at < 0) return false;
+    list.splice(at, 1);
+    dirty[c] = true;
+    if (c === 'ct' && recs.pay) {
+      for (q = recs.pay.length - 1; q >= 0; q--) {
+        if (recs.pay[q].ct === op.id) { recs.pay.splice(q, 1); dirty.pay = true; }
+      }
+    }
+    if (c === 'bud') {
+      for (q = 0; q < (recs.ct || []).length; q++) if (recs.ct[q].bud === op.id) { recs.ct[q].bud = ''; dirty.ct = true; }
+      for (q = 0; q < (recs.pay || []).length; q++) if (recs.pay[q].bud === op.id) { recs.pay[q].bud = ''; dirty.pay = true; }
+    }
+    return true;
+  }
+  var old = at >= 0 ? list[at] : null;
+  if (op.nw ? old : !old) return false;    // 새로 넣기는 없을 때만, 고치기는 있을 때만
+  var rec = cleanRec_(c, op.f, recs, old);
+  if (!rec) return false;
+  if (old) {
+    var same = true, s = REC_SCHEMA[c];
+    for (q = 0; q < s.length; q++) if (old[s[q][0]] !== rec[s[q][0]]) { same = false; break; }
+    if (same) return false;
+  }
+  rec.id = op.id; rec.mt = now; rec.mb = who;
+  if (old) list[at] = rec; else list.push(rec);
+  dirty[c] = true;
+  return true;
+}
+
+/**
+ * 화면이 보낸 칸(f)을 틀에 맞게 다듬는다. 이미 있는 기록(old)이면 f 에 없는 칸은 old 값을 그대로 둔다.
+ * 꼭 있어야 할 칸을 비우려 하면(새로 넣을 때는 빠뜨리면) null.
+ * 고칠 때는 보낸 칸만 따진다 — 사람이 시트에서 비워 둔 칸이 있어도 다른 칸은 고칠 수 있게.
+ */
+function cleanRec_(c, f, recs, old) {
+  if (!f || typeof f !== 'object') return null;
+  var s = REC_SCHEMA[c], out = {}, k, r, has = function (key) { return Object.prototype.hasOwnProperty.call(f, key); };
+  for (k = 0; k < s.length; k++) {
+    var key = s[k][0], type = s[k][1], v = f[key], val;
+    if (old && !has(key)) { out[key] = old[key]; continue; }
+    if (type === 'date') {
+      val = (typeof v === 'string' && /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/.test(v)) ? v : '';
+    } else if (type === 'time') {
+      val = (typeof v === 'string' && /^([01]\d|2[0-3]):[0-5]\d$/.test(v)) ? v : '';
+    } else if (type === 'won') {
+      val = (typeof v === 'number' && isFinite(v)) ? Math.round(v) : 0;
+      if (val < 0 || val > 1000000000000) val = 0;
+    } else if (type === 'bool') {
+      val = v === true;
+    } else if (type.slice(0, 4) === 'ref:') {
+      // 다른 묶음의 기록을 가리키는 칸 — 실제로 있는 아이디만 받는다
+      var to = recs[type.slice(4)] || [];
+      val = '';
+      if (typeof v === 'string') {
+        for (r = 0; r < to.length; r++) if (to[r].id === v) { val = v; break; }
+      }
+    } else {
+      val = clip_(v, Number(type.slice(1)));
+    }
+    out[key] = val;
+  }
+  for (k = 0; k < s.length; k++) if (s[k][2] && !out[s[k][0]] && (!old || has(s[k][0]))) return null;
+  if (c === 'pay') {
+    if (out.ct) out.bud = '';              // 계약에 붙은 지출은 계약의 항목을 따른다
+    else if (!out.bud && (!old || has('ct') || has('bud'))) {
+      // 붙을 곳을 고르지 않았거나 고른 계약이 지워졌으면 받지 않는다.
+      // 고른 예산 항목이 그사이 지워졌으면 돈 기록은 남긴다(항목을 지워도 지출은 남기는 것과 같은 규칙)
+      if (!(typeof f.bud === 'string' && f.bud !== '')) return null;
+    }
+  }
+  return out;
+}
+
+/**
+ * 글자로 바꾸고, 줄바꿈·제어 문자·보이지 않는 글자를 빈칸으로, 앞뒤 공백을 떼고, 길이를 자른다.
+ * 자른 끝이 빈칸이면 한 번 더 뗀다 — 두 번 다듬어도 같은 값이어야 시트에서 다시 읽은 값과 어긋나지 않는다.
+ */
 function clip_(s, max) {
   if (typeof s !== 'string') return '';
-  return s.replace(/[\u0000-\u001f\u007f]+/g, ' ').trim().slice(0, max);
+  return s.replace(/[\u0000-\u001f\u007f\u200b-\u200d\ufeff]+/g, ' ').trim().slice(0, max).trim();
 }
 // ==== 공유 규칙 끝 ====
 
@@ -250,18 +484,67 @@ function call(body) {
     }, function (e) { clearTimeout(to); throw e; });
 }
 
-/** 지금 보여 줄 목록 = 서버 상태 + 아직 못 보낸 변경 */
-function current() {
-  var items = srv.items.map(function (x) { var c = {}; for (var k in x) c[k] = x[k]; return c; });
-  applyOps_(items, srv.phases, queue, me, Date.now());
-  return items;
+function copy(x) { var c = {}; for (var k in x) c[k] = x[k]; return c; }
+
+/** 서버가 일정·예산·계약·지출을 아는가 (예전 서버 코드면 모른다 — 그때는 새 탭을 잠가 둔다) */
+function hasRec() { return !!(srv && srv.ver >= 3 && srv.rec && Array.isArray(srv.rec.ev) && Array.isArray(srv.rec.bud)); }
+
+/** 지금 보여 줄 것 = 서버 상태 + 아직 못 보낸 변경 */
+function view() {
+  var items = srv.items.map(copy);
+  var recs = { ev: [], bud: [], ct: [], pay: [] };
+  if (hasRec()) Object.keys(recs).forEach(function (c) { recs[c] = (srv.rec[c] || []).map(copy); });
+  applyOps_(items, srv.phases, queue, me, Date.now(), recs, {});
+  return { items: items, recs: recs };
 }
 
-function push(op) {
+function findRec(c, id) {
+  return view().recs[c].filter(function (x) { return x.id === id; })[0] || null;
+}
+
+/**
+ * 기록 넣기·고치기 변경을 만든다 — 틀(REC_SCHEMA)에 있는 칸 가운데 vals 에 든 것만 담는다.
+ * 고칠 때는 바꾼 칸만 보내야 그사이 상대가 고친 다른 칸을 덮어쓰지 않는다.
+ */
+function putOp(c, id, vals, isNew) {
+  var f = {};
+  REC_SCHEMA[c].forEach(function (s) {
+    if (Object.prototype.hasOwnProperty.call(vals, s[0]) && vals[s[0]] !== undefined) f[s[0]] = vals[s[0]];
+  });
+  var op = { k: 'put', c: c, id: id, f: f };
+  if (isNew) op.nw = 1;                     // 새로 넣기 — 다시 보내져도 나중에 고친 값을 덮지 않는다
+  return op;
+}
+
+/** 서버가 마지막으로 보내 준 그 기록 (아직 못 보낸 내 변경은 섞지 않은 것) */
+function srvRec(c, id) {
+  return ((srv && srv.rec && srv.rec[c]) || []).filter(function (x) { return x.id === id; })[0] || null;
+}
+
+/** 변경을 대기열에 넣고 화면에 바로 보인다. soon 이면 다시 그리기를 조금 미룬다(renderSoon) */
+function push(op, soon) {
+  if ((op.k === 'put' || op.k === 'drop') && !hasRec()) { toast('서버 코드를 먼저 새로 바꿔 주세요'); return; }
   queue.push(op);
   saveQueue();
-  render();
+  if (soon) renderSoon(); else render();
   schedule(400);
+}
+
+/*
+ * 누르는 사이(마우스·손가락을 아직 안 뗀 동안)에 화면을 새로 그리면, 누른 단추가 새 단추로 바뀌어
+ * 클릭이 사라지고 새로 누른 칸도 커서를 잃는다. 예산 칸은 손을 뗄 때 저장하므로 바로 그 순간이 겹친다 —
+ * 그래서 예산 칸 저장 뒤의 다시 그리기는 손을 뗀 다음으로 미룬다.
+ */
+var pressing = false, renderAfterPress = false;
+document.addEventListener('pointerdown', function () { pressing = true; }, true);
+function released() {
+  pressing = false;
+  if (renderAfterPress) { renderAfterPress = false; setTimeout(render, 0); }
+}
+document.addEventListener('pointerup', released, true);
+document.addEventListener('pointercancel', released, true);
+function renderSoon() {
+  if (pressing) renderAfterPress = true; else setTimeout(render, 0);
 }
 
 function schedule(ms) {
@@ -269,16 +552,17 @@ function schedule(ms) {
   timer = setTimeout(sync, ms);
 }
 
-/** 보낼 것이 있으면 보내고, 없으면 바뀐 것이 있는지 물어본다 */
-function sync() {
+/** 보낼 것이 있으면 보내고, 없으면 바뀐 것이 있는지 물어본다. force 는 「새로 고침」 단추 — 숨김 여부와 상관없이 묻는다 */
+function sync(force) {
   clearTimeout(timer);
-  if (busy || !pw || !srv) return;
-  if (!queue.length && document.hidden) return;        // 화면을 안 보고 있으면 묻지 않는다
+  if (busy) { again = true; return; }        // 주고받는 중이면 끝난 뒤 한 번 더 한다 (새로 고침을 눌렀을 때 등)
+  if (!pw || !srv) return;
+  if (!queue.length && document.hidden && force !== true) return;   // 화면을 안 보고 있으면 묻지 않는다
   busy = true;
   var my = session;
   var sent = Math.min(queue.length, MAX_OPS);
   var body = sent ? { pw: pw, op: 'apply', ops: queue.slice(0, sent), who: me }
-                  : { pw: pw, op: 'load', since: srv.rev };
+                  : { pw: pw, op: 'load', since: hasRec() ? srv.rev : undefined };   // 예전 서버 판이면 늘 통째로 — 서버를 새로 바꾸면 곧바로 알아챈다
   if (sent) { net = 'busy'; showSync(); }
   call(body).then(function (res) {
     busy = false;
@@ -293,8 +577,12 @@ function sync() {
       render();
       // 그리는 동안 더 구체적인 알림(예: 고치던 항목이 지워짐)이 떴으면 그것을 덮지 않는다
       if (fromOther && toastSeq === seq) toast('새로 바뀐 내용을 불러왔습니다');
-    } else showSync();
-    schedule(queue.length ? 300 : POLL_MS);
+    } else {
+      showSync();
+      if (ymd(day0(new Date())) !== lastDay) render();   // 자정을 넘기면 D-day·「오늘」을 다시 센다
+    }
+    schedule(again || queue.length ? 300 : POLL_MS);
+    again = false;
   }, function () {
     busy = false;
     if (my !== session) return;
@@ -330,7 +618,7 @@ function message(res) {
     var d = new Date(res.until || 0);
     return '여러 번 틀려 ' + (d.getMonth() + 1) + '월 ' + d.getDate() + '일 ' + pad(d.getHours()) + ':' + pad(d.getMinutes()) + '까지 잠겼습니다.';
   }
-  if (res.code === 'not_setup') return '구글 시트에서 「💍 결혼 준비 → 처음 설정하기」를 먼저 실행해 주세요.';
+  if (res.code === 'not_setup') return '구글 시트 위쪽 메뉴의 「처음 설정하기」를 먼저 실행해 주세요.';
   if (res.code === 'not_json') return '서버 주소가 알맞지 않습니다. 웹 앱 액세스가 「모든 사용자」인지 확인해 주세요.';
   if (res.code === 'busy' || res.code === 'server') return '서버가 잠시 바쁩니다. 조금 뒤 다시 해 주세요.';
   return '서버에 연결할 수 없습니다. 인터넷 연결을 확인해 주세요.';
@@ -348,6 +636,8 @@ function lock(msg, keepSaved) {
   var prefill = keepSaved ? (pw || remembered || inTab || '') : '';
   if (!keepSaved) { lsDel(K.pw); ssDel(K.pw); }
   pw = null; srv = null; editing = null; busy = false;
+  editRec = null; addPayFor = null; addCtOpen = false; armed = null; touched = {};
+  addPayBud = null; addLineFor = null;
   clearTimeout(timer);
   clearTimeout(gateTimer);
   document.getElementById('root').innerHTML =
@@ -427,45 +717,171 @@ function shortTime(ms) {
 
 function tagClass(tags, tag) { var i = tags.indexOf(tag); return i <= 0 ? '' : ' t' + Math.min(i, 2); }
 
+var WEEK = ['일', '월', '화', '수', '목', '금', '토'];
+function ymd(d) { return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()); }
+function fmtWon(n) { return (Number(n) || 0).toLocaleString('ko-KR') + '원'; }
+/** 큰 돈은 만 원 단위로 짧게 (소수 한 자리) */
+function fmtMan(n) {
+  n = Number(n) || 0;
+  if (Math.abs(n) < 10000) return fmtWon(n);
+  return (Math.round(n / 1000) / 10).toLocaleString('ko-KR') + '만 원';
+}
+/**
+ * 「330만」·「1억 5천만」·「1천5백만」·「3,300,000원」 → 원 단위 정수. 비어 있으면 0, 알아볼 수 없으면 NaN.
+ * 천·백은 작은 묶음에 모았다가 만·억이 나오면 묶음째 곱한다 — 「1억 2천3백만」 = 1억 + (2천+3백)만.
+ */
+function parseWon(s) {
+  s = String(s == null ? '' : s).replace(/[\s,원₩]/g, '');
+  if (!s) return 0;
+  var re = /(\d+(?:\.\d+)?)(천|백)?(억|만)?/y, total = 0, small = 0, pos = 0, m, v;
+  while (pos < s.length) {
+    re.lastIndex = pos;
+    m = re.exec(s);
+    if (!m || !m[0]) return NaN;
+    v = Number(m[1]) * (m[2] === '천' ? 1000 : m[2] === '백' ? 100 : 1);
+    if (m[3]) { total += (small + v) * (m[3] === '억' ? 1e8 : 1e4); small = 0; } else small += v;
+    pos = re.lastIndex;
+  }
+  return Math.round(total + small);
+}
+function wonHint(raw) {
+  var n = parseWon(raw);
+  if (raw === '' || raw == null) return '';
+  return isNaN(n) ? '알아볼 수 없는 금액입니다' : '= ' + fmtWon(n);
+}
+function ddayOf(dateStr, today) {
+  var d = parseDay(dateStr);
+  return d ? Math.round((day0(d) - today) / 864e5) : null;
+}
+function ddayBadge(n) {
+  if (n === null) return '';
+  if (n === 0) return '<span class="badge now">오늘</span>';
+  if (n === 1) return '<span class="badge now">내일</span>';
+  if (n > 0) return '<span class="badge' + (n <= 7 ? ' now' : '') + '">D-' + n + '</span>';
+  return '<span class="badge late">' + (-n) + '일 지남</span>';
+}
+function shortDate(s) {
+  var d = parseDay(s);
+  return d ? (d.getMonth() + 1) + '/' + d.getDate() + '(' + WEEK[d.getDay()] + ')' : '';
+}
+function listOf(s) { return String(s || '').split(',').map(function (x) { return x.trim(); }).filter(Boolean); }
+
+/* 입력 칸 — id 는 다시 그려도 쓰던 글자를 지키는 데, name 은 저장할 때 읽는 데 쓴다 */
+function fld(id, name, label, type, value, extra, wide) {
+  if (type === 'date') extra = (extra || '') + ' min="2000-01-01" max="2099-12-31"';
+  return '<label class="fld' + (wide ? ' wide' : '') + '"><span>' + label + '</span><input id="' + esc(id) + '" name="' + name +
+    '" type="' + type + '" value="' + esc(value == null ? '' : value) + '"' + (extra || '') + '></label>';
+}
+function wonFld(id, name, label, value, req) {
+  var v = value ? Number(value).toLocaleString('ko-KR') : '';
+  return '<label class="fld"><span>' + label + '</span><input id="' + esc(id) + '" name="' + name + '" type="text" inputmode="text"' +
+    ' data-won value="' + esc(v) + '" placeholder="예: 330만"' + (req ? ' required' : '') + '>' +
+    '<small class="hint" id="hint-' + esc(id) + '">' + esc(wonHint(v)) + '</small></label>';
+}
+
 function render() {
   if (!srv) return;
   // 다시 그려도 쓰던 글자·커서가 날아가지 않게 붙잡아 둔다
-  var keep = {}, act = document.activeElement, actId = act && act.id, s0 = null, s1 = null;
-  Array.prototype.forEach.call(document.querySelectorAll('#root input[id]'), function (el) {
-    if (el.type !== 'checkbox') keep[el.id] = el.value;
+  var keep = {}, keepChk = {}, act = document.activeElement, actId = act && act.id, s0 = null, s1 = null;
+  Array.prototype.forEach.call(document.querySelectorAll('#root input[id], #root select[id]'), function (el) {
+    // 기록 고치기 칸은 손댄 것만 붙잡는다 — 손대지 않은 칸은 상대가 바꾼 새 값으로 다시 그려진다
+    if (el.closest('form.edrec[data-id]') && !touched[el.id]) return;
+    // 예산표의 예산 칸은 적다 만(아직 저장 안 한) 것만 붙잡는다
+    if (el.hasAttribute('data-plan') && el.value === el.getAttribute('data-orig')) return;
+    if (el.type === 'checkbox') { if (el.hasAttribute('data-keep')) keepChk[el.id] = el.checked; }
+    else keep[el.id] = el.value;
   });
   try { if (act && act.selectionStart != null) { s0 = act.selectionStart; s1 = act.selectionEnd; } } catch (e) {}
+  // 더하기 칸 — 처음 그린 값에서 바꾼 것만 「적다 만 글」로 남긴다(비웠거나 처음 값으로 되돌린 칸은 잊는다)
+  Array.prototype.forEach.call(document.querySelectorAll('#root form[data-form$="-add"] [id], #root form.add [id]'), function (el) {
+    if (el.tagName !== 'INPUT' && el.tagName !== 'SELECT') return;
+    var cur = fieldVal(el);
+    if (cur === fieldDefault(el)) delete drafts[el.id]; else drafts[el.id] = cur;
+  });
 
-  var items = current();
-  var phases = srv.phases.slice();
-  var known = {};
-  phases.forEach(function (p) { known[p.id] = true; });
-  if (items.some(function (x) { return !known[x.p]; })) phases.push({ id: '', title: '그 밖의 일', when: '', due: '' });
-  if (editing && !items.some(function (x) { return x.id === editing && !x.hid; })) {
-    var lost = keep['ed-t-' + editing];
-    editing = null; editBase = null;
-    toast('고치던 항목을 상대가 지웠습니다' + (lost ? ' — 적던 글: ' + lost : ''));
-  }
-
-  var shown = items.filter(function (x) { return !x.hid; });
-  var tags = [];
-  shown.forEach(function (x) { if (x.tag && tags.indexOf(x.tag) < 0) tags.push(x.tag); });
-  if (view !== 'all' && view !== 'left' && tags.indexOf(view) < 0) view = 'all';
-
+  var v = view();
   var meta = srv.meta || {};
   var today = day0(new Date());
-  var wed = parseDay(meta['예식 일시']);
+  var ctx = { v: v, meta: meta, today: today, todayStr: ymd(today), keep: keep, wed: parseDay(meta['예식 일시']) };
+  lastDay = ctx.todayStr;
+  if (armed && armed.until < Date.now()) armed = null;
+
+  // 고치던 기록을 상대가 지웠으면 알려 준다
+  if (editRec && !v.recs[editRec.c].some(function (x) { return x.id === editRec.id; })) {
+    editRec = null;
+    toast('고치던 기록을 상대가 지웠습니다');
+  }
+  if (addPayFor && !v.recs.ct.some(function (x) { return x.id === addPayFor; })) addPayFor = null;
+
+  var h = [];
+  renderHead(h, ctx);
+  h.push('<div class="toolbar"><nav class="tabs" aria-label="화면">');
+  TABS.forEach(function (t) {
+    h.push('<button type="button" data-tab="' + t[0] + '" aria-selected="' + (tab === t[0]) + '">' + t[1] + '</button>');
+  });
+  h.push('</nav><div class="sync" id="sync"></div></div>');
+
+  if (askName) {
+    h.push('<form class="card gold" id="nameForm"><p><b>체크·기록할 때 이름을 남길까요?</b> 누가 무엇을 했는지 서로 볼 수 있어요.</p>' +
+      '<div class="row"><input id="name-in" maxlength="20" placeholder="이름이나 별명" aria-label="이름">' +
+      '<button class="btn pri" type="submit">저장</button><button class="btn" type="button" data-act="skipName">건너뛰기</button></div></form>');
+  }
+
+  if (tab === 'todo') renderTodo(h, ctx);
+  else if (!hasRec()) renderNeedUpdate(h);
+  else if (tab === 'plan') renderPlan(h, ctx);
+  else if (tab === 'budget') renderBudget(h, ctx);
+  else renderMoney(h, ctx);
+
+  h.push('<div class="foot">');
+  h.push('<p>모든 내용은 두 사람이 함께 보는 구글 시트에 저장됩니다. ' + esc(meta['바닥글'] || '') + '</p>');
+  h.push('<p>' + (me ? '내 이름: <b>' + esc(me) + '</b> · ' : '') +
+    '<button type="button" class="restore" data-act="rename">' + (me ? '이름 바꾸기' : '이름 남기기') + '</button> · ' +
+    '<button type="button" class="restore" data-act="logout">이 기기에서 잠그기</button></p>');
+  h.push('</div>');
+
+  // 갈아 끼우는 동안 떨어져 나가는 칸이 change·blur 를 낼 수 있다 — 그 사이에는 저장하지 않는다(savePlan)
+  rendering = true;
+  try { document.getElementById('root').innerHTML = h.join(''); } finally { rendering = false; }
+  showSync();
+
+  Object.keys(keep).forEach(function (id) {
+    var el = document.getElementById(id);
+    if (el && keep[id] !== undefined) el.value = keep[id];
+  });
+  Object.keys(keepChk).forEach(function (id) {
+    var el = document.getElementById(id);
+    if (el) el.checked = keepChk[id];
+  });
+  Object.keys(drafts).forEach(function (id) {
+    if (Object.prototype.hasOwnProperty.call(keep, id) || Object.prototype.hasOwnProperty.call(keepChk, id)) return;
+    var el = document.getElementById(id);
+    if (!el) return;
+    if (el.type === 'checkbox') el.checked = !!drafts[id]; else el.value = drafts[id];
+  });
+  Array.prototype.forEach.call(document.querySelectorAll('#root input[data-won]'), updHint);
+  if (actId) {
+    var el = document.getElementById(actId);
+    if (el) { el.focus(); try { if (s0 != null) el.setSelectionRange(s0, s1); } catch (e) {} }
+  }
+}
+
+function updHint(el) {
+  var hint = document.getElementById('hint-' + el.id);
+  if (hint) { hint.textContent = wonHint(el.value); hint.className = 'hint' + (isNaN(parseWon(el.value)) ? ' bad' : ''); }
+}
+
+function renderHead(h, ctx) {
+  var meta = ctx.meta, shown = ctx.v.items.filter(function (x) { return !x.hid; });
   var total = shown.length, doneN = shown.filter(function (x) { return x.done; }).length;
   var pct = total ? Math.round(doneN / total * 100) : 0;
-  var h = [];
-
   h.push('<header class="top"><div>');
   if (meta['머리말']) h.push('<div class="eyebrow">' + esc(meta['머리말']) + '</div>');
   h.push('<h1 class="title">' + esc(meta['제목'] || '체크리스트').replace(/\n/g, '<br>') + '</h1>');
-  if (meta['안내']) h.push('<div class="when">' + esc(meta['안내']) + '</div>');
+  if (meta['안내'] && tab === 'todo') h.push('<div class="when">' + esc(meta['안내']) + '</div>');
   h.push('</div><div class="stats">');
-  if (wed) {
-    var dl = Math.round((day0(wed) - today) / 864e5);
+  if (ctx.wed) {
+    var dl = Math.round((day0(ctx.wed) - ctx.today) / 864e5);
     h.push('<div class="stat"><b>' + (dl > 0 ? 'D-' + dl : dl === 0 ? 'D-DAY' : 'D+' + (-dl)) + '</b><span>예식까지</span></div>');
   }
   h.push('<div class="stat"><b>' + doneN + ' / ' + total + '</b><span>마친 일 · ' + pct + '%</span><div class="bar"><i style="width:' + pct + '%"></i></div></div></div>');
@@ -475,18 +891,37 @@ function render() {
     h.push('</div>');
   }
   h.push('</header>');
+}
 
-  h.push('<div class="toolbar"><div class="seg" role="group" aria-label="보기">');
-  [['all', '전체'], ['left', '남은 일']].concat(tags.map(function (t) { return [t, t]; })).forEach(function (v) {
-    h.push('<button type="button" data-view="' + esc(v[0]) + '" aria-pressed="' + (view === v[0]) + '">' + esc(v[1]) + '</button>');
-  });
-  h.push('</div><div class="sync" id="sync"></div></div>');
+function renderNeedUpdate(h) {
+  h.push('<div class="card warnc"><p><b>이 화면을 쓰려면 구글 시트의 서버 코드를 새로 바꿔야 합니다.</b></p>' +
+    '<p class="mini">구글 시트 → 확장 프로그램 → Apps Script 에 새 Code.gs 를 붙여 넣고 저장한 뒤, ' +
+    '[배포 → 배포 관리 → ✏️ → 버전: 새 버전 → 배포] 를 누르세요. 주소는 바뀌지 않습니다.</p></div>');
+}
 
-  if (askName) {
-    h.push('<form class="card gold" id="nameForm"><p><b>체크할 때 이름을 남길까요?</b> 누가 무엇을 끝냈는지 서로 볼 수 있어요.</p>' +
-      '<div class="row"><input id="name-in" maxlength="20" placeholder="이름이나 별명" aria-label="이름">' +
-      '<button class="btn pri" type="submit">저장</button><button class="btn" type="button" data-act="skipName">건너뛰기</button></div></form>');
+/* ── ✅ 할 일 ── */
+function renderTodo(h, ctx) {
+  var items = ctx.v.items, keep = ctx.keep, today = ctx.today;
+  var phases = srv.phases.slice();
+  var known = {};
+  phases.forEach(function (p) { known[p.id] = true; });
+  if (items.some(function (x) { return !known[x.p]; })) phases.push({ id: '', title: '그 밖의 일', when: '', due: '' });
+  if (editing && !items.some(function (x) { return x.id === editing && !x.hid; })) {
+    var lost = keep['ed-t-' + editing];
+    editing = null; editBase = null;
+    toast('고치던 항목을 상대가 지웠습니다' + (lost ? ' — 적던 글: ' + lost : ''));
   }
+  var shown = items.filter(function (x) { return !x.hid; });
+  var tags = [];
+  shown.forEach(function (x) { if (x.tag && tags.indexOf(x.tag) < 0) tags.push(x.tag); });
+  if (view_ !== 'all' && view_ !== 'left' && tags.indexOf(view_) < 0) view_ = 'all';
+
+  h.push('<div class="filters"><div class="seg" role="group" aria-label="보기">');
+  [['all', '전체'], ['left', '남은 일']].concat(tags.map(function (t) { return [t, t]; })).forEach(function (v) {
+    h.push('<button type="button" data-view="' + esc(v[0]) + '" aria-pressed="' + (view_ === v[0]) + '">' + esc(v[1]) + '</button>');
+  });
+  h.push('</div></div>');
+
   var old = oldLocal();
   if (old) {
     h.push('<div class="card gold"><p><b>이 기기에만 저장된 예전 기록이 있습니다.</b> ' + esc(old.summary) + '</p>' +
@@ -503,11 +938,11 @@ function render() {
     else if (due && due < today) pill = '<span class="pill late">기한 지남 · ' + (n - k) + '개 남음</span>';
     else if (due && (due - today) / 864e5 <= 45) pill = '<span class="pill now">지금 할 차례</span>';
     var vis = list.filter(function (x) {
-      if (view === 'left') return !x.done;
-      if (view !== 'all') return x.tag === view;
+      if (view_ === 'left') return !x.done;
+      if (view_ !== 'all') return x.tag === view_;
       return true;
     });
-    if (!vis.length && view !== 'all') return;
+    if (!vis.length && view_ !== 'all') return;
     if (!ph.id && !n) return;
     h.push('<section class="phase"><div class="ph-head"><h2>' + esc(ph.title) + '</h2>' +
       (ph.when ? '<span class="ph-when">' + esc(ph.when) + '</span>' : '') + pill +
@@ -533,7 +968,7 @@ function render() {
       h.push('</li>');
     });
     h.push('</ul>');
-    if (view === 'all' && ph.id) {
+    if (view_ === 'all' && ph.id) {
       h.push('<form class="add" data-p="' + esc(ph.id) + '"><input id="add-' + esc(ph.id) + '" placeholder="이 시기에 할 일 직접 더하기" maxlength="120" aria-label="' + esc(ph.title) + '에 할 일 더하기"><button class="btn pri" type="submit">더하기</button></form>');
     }
     h.push('</section>');
@@ -541,29 +976,485 @@ function render() {
 
   var hid = items.filter(function (x) { return !x.mine && x.hid; }).length;
   var eds = items.filter(function (x) { return !x.mine && x.ot && (x.t !== x.ot || x.n !== x.on); }).length;
-  h.push('<div class="foot">');
   if (hid || eds) {
-    h.push('<p>' + (hid ? '지운 기본 항목 ' + hid + '개 · <button type="button" class="restore" data-act="restoreAll">모두 되살리기</button>' : '') +
+    h.push('<p class="mini restore-line">' + (hid ? '지운 기본 항목 ' + hid + '개 · <button type="button" class="restore" data-act="restoreAll">모두 되살리기</button>' : '') +
       (hid && eds ? '&nbsp;&nbsp;&nbsp;' : '') +
       (eds ? '고친 기본 항목 ' + eds + '개 · <button type="button" class="restore" data-act="revertAll">처음 글로 되돌리기</button>' : '') + '</p>');
   }
-  h.push('<p>체크·고치기·지우기는 두 사람이 함께 보는 구글 시트에 저장됩니다. ' + esc(meta['바닥글'] || '') + '</p>');
-  h.push('<p>' + (me ? '내 이름: <b>' + esc(me) + '</b> · ' : '') +
-    '<button type="button" class="restore" data-act="rename">' + (me ? '이름 바꾸기' : '이름 남기기') + '</button> · ' +
-    '<button type="button" class="restore" data-act="logout">이 기기에서 잠그기</button></p>');
-  h.push('</div>');
+}
 
-  document.getElementById('root').innerHTML = h.join('');
-  showSync();
+/* 지우기 단추 — 한 번 누르면 「정말 지울까요?」로 바뀌고, 5초 안에 한 번 더 누르면 지운다 */
+function dropBtn(c, id, extra) {
+  var key = c + ':' + id, on = armed && armed.key === key;
+  return '<button type="button" class="lnk del' + (on ? ' armed' : '') + '" data-drop="' + esc(key) + '">' +
+    (on ? '정말 지울까요?' + (extra || '') : '지우기') + '</button>';
+}
+function editWarn(c, x) {
+  var sr = srvRec(c, x.id);
+  return editRec && editRec.c === c && editRec.id === x.id && sr && editRec.mt !== sr.mt
+    ? '<p class="warn">그사이 상대가 이 기록을 고쳤습니다. 손대지 않은 칸은 새 값으로 바꿔 두었고, 내가 고친 칸만 저장됩니다.</p>' : '';
+}
 
-  Object.keys(keep).forEach(function (id) {
-    var el = document.getElementById(id);
-    if (el && keep[id] !== undefined) el.value = keep[id];
+/* ── 📅 일정 ── */
+function evFields(pre, x) {
+  return '<div class="grid">' +
+    fld(pre + 'date', 'date', '날짜', 'date', x.date, ' required') +
+    fld(pre + 'time', 'time', '시간 (선택)', 'time', x.time) +
+    fld(pre + 'title', 'title', '무엇을', 'text', x.title, ' maxlength="80" required placeholder="예: 업체 상담"', true) +
+    fld(pre + 'place', 'place', '어디서 (선택)', 'text', x.place, ' maxlength="80"') +
+    fld(pre + 'memo', 'memo', '메모 (선택)', 'text', x.memo, ' maxlength="300"') +
+    '</div>';
+}
+
+function renderPlan(h, ctx) {
+  var v = ctx.v, meta = ctx.meta, today = ctx.today, todayStr = ctx.todayStr;
+  h.push('<form class="card" data-form="ev-add"><p class="card-h">📅 일정 더하기</p>' +
+    evFields('f-ev-', { date: todayStr }) +
+    '<div class="row"><button class="btn pri" type="submit">더하기</button></div></form>');
+
+  var ctById = {}, budById = {};
+  v.recs.ct.forEach(function (c) { ctById[c.id] = c; });
+  v.recs.bud.forEach(function (b) { budById[b.id] = b; });
+  var ent = [];
+  v.recs.ev.forEach(function (e) { ent.push({ kind: 'ev', date: e.date, time: e.time, rec: e }); });
+  v.recs.pay.forEach(function (p) {
+    if (p.date && !p.paid) ent.push({ kind: 'pay', date: p.date, time: '', rec: p, ct: ctById[p.ct], bud: budById[p.bud] });
   });
-  if (actId) {
-    var el = document.getElementById(actId);
-    if (el) { el.focus(); try { if (s0 != null) el.setSelectionRange(s0, s1); } catch (e) {} }
+  if (ctx.wed) ent.push({ kind: 'wed', date: ymd(ctx.wed), time: pad(ctx.wed.getHours()) + ':' + pad(ctx.wed.getMinutes()) });
+  ent.sort(function (a, b) { var x = a.date + (a.time || '99'), y = b.date + (b.time || '99'); return x < y ? -1 : x > y ? 1 : 0; });
+
+  // 지난 일정은 접어 두되, 아직 안 낸 지불은 날짜가 지나도 앞쪽에 둔다
+  var up = ent.filter(function (e) { return e.date >= todayStr || e.kind === 'pay'; });
+  var past = ent.filter(function (e) { return e.date < todayStr && e.kind !== 'pay'; }).reverse();
+
+  if (!v.recs.ev.length && !up.some(function (e) { return e.kind === 'pay'; })) {
+    h.push('<p class="mini empty">아직 적어 둔 일정이 없습니다. 위에서 날짜와 할 일을 적어 더해 보세요.</p>');
   }
+  var lastMonth = '';
+  up.forEach(function (e, i) {
+    var mon = e.date.slice(0, 7);
+    if (mon !== lastMonth) {
+      if (lastMonth) h.push('</ul>');
+      h.push('<h2 class="month">' + Number(mon.slice(0, 4)) + '년 ' + Number(mon.slice(5)) + '월</h2><ul class="evs">');
+      lastMonth = mon;
+    }
+    h.push(evRow(e, today));
+  });
+  if (lastMonth) h.push('</ul>');
+
+  if (past.length) {
+    h.push('<p class="mini"><button type="button" class="restore" data-act="togglePast">' +
+      (showPast ? '지난 일정 접기' : '지난 일정 ' + past.length + '개 보기') + '</button></p>');
+    if (showPast) {
+      h.push('<ul class="evs past">');
+      past.forEach(function (e) { h.push(evRow(e, today)); });
+      h.push('</ul>');
+    }
+  }
+}
+
+function evRow(e, today) {
+  var d = parseDay(e.date), n = ddayOf(e.date, today);
+  var box = '<div class="dbox"><b>' + (d ? d.getDate() : '?') + '</b><span>' + (d ? (d.getMonth() + 1) + '월 ' + WEEK[d.getDay()] : '') + '</span></div>';
+  if (e.kind === 'wed') {
+    return '<li class="ev wed">' + box + '<div><div class="ev-t">💒 ' + esc(srv.meta['예식 이름'] || '예식') + ddayBadge(n) + '</div>' +
+      '<div class="ev-s">' + esc(e.time) + '</div></div><span></span></li>';
+  }
+  if (e.kind === 'pay') {
+    var p = e.rec;
+    var where = p.ct ? (e.ct ? e.ct.name : '(지워진 계약)') : (e.bud ? e.bud.name : '(항목 없음)');
+    return '<li class="ev paydue">' + box + '<div><div class="ev-t">💰 ' + esc(where) + ' · ' +
+      esc(p.label || '지불') + ddayBadge(n) + '</div><div class="ev-s">' + fmtWon(p.amount) + ' 낼 차례' +
+      (p.by ? ' · ' + esc(p.by) : '') + '</div></div>' +
+      '<span class="acts"><button type="button" class="lnk" data-act="' + (p.ct ? 'gotoCt" data-ct="' + esc(p.ct) : 'gotoBud" data-bud="' + esc(p.bud)) + '">' + (p.ct ? '계약 보기' : '예산 보기') + '</button></span></li>';
+  }
+  var x = e.rec;
+  if (editRec && editRec.c === 'ev' && editRec.id === x.id) {
+    return '<li class="ev">' + box + '<form class="edrec" data-form="ev-edit" data-id="' + esc(x.id) + '">' + editWarn('ev', x) +
+      evFields('f-eved-' + x.id + '-', x) +
+      '<div class="row"><button class="btn pri" type="submit">저장</button><button class="btn" type="button" data-act="cancelRec">취소</button></div></form></li>';
+  }
+  return '<li class="ev">' + box + '<div><div class="ev-t">' + esc(x.title) + ddayBadge(n) + '</div>' +
+    ((x.time || x.place) ? '<div class="ev-s">' + esc([x.time, x.place].filter(Boolean).join(' · ')) + '</div>' : '') +
+    (x.memo ? '<div class="note">' + esc(x.memo) + '</div>' : '') +
+    (x.mb ? '<div class="who">' + esc(x.mb) + ' 적음</div>' : '') + '</div>' +
+    '<span class="acts"><button type="button" class="lnk" data-edrec="ev:' + esc(x.id) + '">고치기</button>' + dropBtn('ev', x.id) + '</span></li>';
+}
+
+/* ── 돈 — 공통 도우미 ── */
+
+/** 「설정」 시트의 「지출 방법」(「묶음: 방법, 방법 / 묶음: …」) → [{ g: 묶음, items: [방법, …] }, …] */
+function methodGroups(meta) {
+  var out = [], at = {};
+  String(meta['지출 방법'] || '').split('/').forEach(function (part) {
+    var m = part.split(':');
+    var g = m.length > 1 ? m[0].trim() : '기타';
+    var items = listOf(m.length > 1 ? m.slice(1).join(':') : m[0]);
+    if (!items.length) return;
+    // 같은 묶음 이름을 두 번 적었으면 하나로 합친다 — 따로 두면 같은 합계 막대가 두 번 그려진다
+    if (!Object.prototype.hasOwnProperty.call(at, g)) { at[g] = out.length; out.push({ g: g, items: [] }); }
+    items.forEach(function (it) { if (out[at[g]].items.indexOf(it) < 0) out[at[g]].items.push(it); });
+  });
+  return out;
+}
+function groupOfMethod(groups, name) {
+  for (var i = 0; i < groups.length; i++) if (groups[i].items.indexOf(name) >= 0) return groups[i].g;
+  return '';
+}
+function budPath(b) { return b ? [b.mid, b.name].filter(Boolean).join(' › ') : ''; }
+
+/** 계약 하나의 셈 — 비용은 「총액」과 「지출 기록 합」 가운데 큰 쪽 */
+function ctNums(c, pays) {
+  var paid = 0, plan = 0;
+  pays.forEach(function (p) { plan += p.amount; if (p.paid) paid += p.amount; });
+  var cost = Math.max(c.total || 0, plan);
+  return { paid: paid, plan: plan, cost: cost, left: cost - paid };
+}
+
+/**
+ * 예산표 셈 — 항목마다 예산(plan) · 확정(계약 비용 + 바로 적은 지출) · 낸 돈.
+ * 항목이 없는(또는 지워진) 계약은 noLine 에, 붙을 곳이 없는 지출은 orphans 에 모은다.
+ */
+function moneyCalc(v) {
+  var byLine = {}, paysOf = {}, orphans = [];
+  v.recs.bud.forEach(function (b) { byLine[b.id] = { b: b, committed: 0, paid: 0, cts: [], pays: [] }; });
+  var noLine = { b: null, committed: 0, paid: 0, cts: [], pays: [] };
+  v.recs.ct.forEach(function (c) { paysOf[c.id] = []; });
+  v.recs.pay.forEach(function (p) {
+    if (p.ct) (paysOf[p.ct] || orphans).push(p);
+    else if (byLine[p.bud]) byLine[p.bud].pays.push(p);
+    else orphans.push(p);
+  });
+  v.recs.ct.forEach(function (c) {
+    var n = ctNums(c, paysOf[c.id]), t = byLine[c.bud] || noLine;
+    t.cts.push({ c: c, n: n });
+    t.committed += n.cost;
+    t.paid += n.paid;
+  });
+  Object.keys(byLine).forEach(function (id) {
+    byLine[id].pays.forEach(function (p) { byLine[id].committed += p.amount; if (p.paid) byLine[id].paid += p.amount; });
+  });
+  return { byLine: byLine, noLine: noLine, paysOf: paysOf, orphans: orphans };
+}
+
+function selectFld(id, name, label, optionsHtml, req, wide) {
+  return '<label class="fld' + (wide ? ' wide' : '') + '"><span>' + label + '</span><select id="' + esc(id) + '" name="' + name + '"' +
+    (req ? ' required' : '') + '>' + optionsHtml + '</select></label>';
+}
+function methodOptions(groups, val) {
+  var h = '<option value="">(안 적음)</option>', known = !val;
+  groups.forEach(function (g) {
+    h += '<optgroup label="' + esc(g.g) + '">';
+    g.items.forEach(function (m) {
+      if (m === val) known = true;
+      h += '<option value="' + esc(m) + '"' + (m === val ? ' selected' : '') + '>' + esc(m) + '</option>';
+    });
+    h += '</optgroup>';
+  });
+  if (!known) h += '<option value="' + esc(val) + '" selected>' + esc(val) + '</option>';
+  return h;
+}
+function budOptions(lines, val, emptyLabel) {
+  var h = '<option value="">' + esc(emptyLabel) + '</option>', group = null;
+  lines.forEach(function (b) {
+    var g = (b.big || '') + ' · ' + (b.mid || '');
+    if (g !== group) { if (group !== null) h += '</optgroup>'; h += '<optgroup label="' + esc(g) + '">'; group = g; }
+    h += '<option value="' + esc(b.id) + '"' + (b.id === val ? ' selected' : '') + '>' + esc(b.name) + '</option>';
+  });
+  if (group !== null) h += '</optgroup>';
+  return h;
+}
+
+/* ── 📊 예산 ── */
+function renderBudget(h, ctx) {
+  var v = ctx.v, meta = ctx.meta, today = ctx.today;
+  var calc = moneyCalc(v), groups = methodGroups(meta);
+  var lines = v.recs.bud;
+
+  // 한눈에 — 총 예산 · 확정 · 낸 돈 · 남은 예산
+  var plan = 0, committed = calc.noLine.committed, paid = calc.noLine.paid;
+  lines.forEach(function (b) { var t = calc.byLine[b.id]; plan += b.plan; committed += t.committed; paid += t.paid; });
+  calc.orphans.forEach(function (p) { committed += p.amount; if (p.paid) paid += p.amount; });
+  var left = plan - committed;
+  h.push('<div class="sum">' +
+    '<div class="stat"><b title="' + esc(fmtWon(plan)) + '">' + fmtMan(plan) + '</b><span>총 예산</span></div>' +
+    '<div class="stat"><b title="' + esc(fmtWon(committed)) + '">' + fmtMan(committed) + '</b><span>확정 (계약·지출)</span>' +
+    '<div class="bar' + (plan && committed > plan ? ' over' : '') + '"><i style="width:' + (plan ? Math.min(100, Math.round(committed / plan * 100)) : 0) + '%"></i></div></div>' +
+    '<div class="stat"><b title="' + esc(fmtWon(paid)) + '">' + fmtMan(paid) + '</b><span>낸 돈</span></div>' +
+    '<div class="stat' + (left < 0 ? ' over' : '') + '"><b title="' + esc(fmtWon(left)) + '">' + (left < 0 ? '−' + fmtMan(-left) : fmtMan(left)) + '</b><span>' + (left < 0 ? '예산 초과' : '남은 예산') + '</span></div></div>');
+
+  // 지출 방법별 — 묶음 합계와 방법별 합계 (묶음·방법 이름은 서버 「설정」 시트에서 온다)
+  var byM = {}, byG = {}, gOrder = groups.map(function (g) { return g.g; });
+  v.recs.pay.forEach(function (p) {
+    if (!p.paid) return;
+    var m = p.by || '(지출 방법 안 적음)', g = groupOfMethod(groups, p.by) || '기타';
+    byM[m] = (byM[m] || 0) + p.amount;
+    byG[g] = (byG[g] || 0) + p.amount;
+    if (gOrder.indexOf(g) < 0) gOrder.push(g);
+  });
+  if (paid) {
+    h.push('<div class="card"><p class="card-h">지출 방법별 · 낸 돈</p><div class="who-bars">');
+    gOrder.forEach(function (g) {
+      if (!byG[g]) return;
+      var pct = Math.round(byG[g] / paid * 100);
+      var inside = Object.keys(byM).filter(function (m) { return (groupOfMethod(groups, m) || '기타') === g; })
+        .sort(function (a, b) { return byM[b] - byM[a]; })
+        .map(function (m) { return esc(m) + ' ' + fmtMan(byM[m]); }).join(' · ');
+      h.push('<div class="wb"><span><b>' + esc(g) + '</b></span><span class="track"><i style="width:' + pct + '%"></i></span>' +
+        '<b title="' + esc(fmtWon(byG[g])) + '">' + fmtMan(byG[g]) + ' · ' + pct + '%</b></div>' +
+        '<div class="wb-sub">' + inside + '</div>');
+    });
+    h.push('</div></div>');
+  }
+
+  if (!lines.length) h.push('<p class="mini empty">예산 항목이 없습니다. 아래 「새 분류·항목 더하기」로 만들어 보세요.</p>');
+
+  // 대분류 → 중분류 → 항목 (시트에 적힌 차례 그대로)
+  var bigs = [], mids = {};
+  lines.forEach(function (b) {
+    if (bigs.indexOf(b.big) < 0) { bigs.push(b.big); mids[b.big] = []; }
+    if (mids[b.big].indexOf(b.mid) < 0) mids[b.big].push(b.mid);
+  });
+  bigs.forEach(function (big) {
+    var inBig = lines.filter(function (b) { return b.big === big; });
+    var bp = 0, bc = 0;
+    inBig.forEach(function (b) { bp += b.plan; bc += calc.byLine[b.id].committed; });
+    h.push('<section class="bsec"><h2 class="month">' + esc(big || '(대분류 없음)') +
+      '<span class="sub">예산 ' + fmtMan(bp) + ' · 확정 ' + fmtMan(bc) + (bp ? ' · ' + Math.round(bc / bp * 100) + '%' : '') + '</span></h2>');
+    mids[big].forEach(function (mid) {
+      var inMid = inBig.filter(function (b) { return b.mid === mid; });
+      var mp = 0, mc = 0;
+      inMid.forEach(function (b) { mp += b.plan; mc += calc.byLine[b.id].committed; });
+      var key = big + '|' + mid;
+      h.push('<div class="mid"><div class="mid-h"><b>' + esc(mid || '(중분류 없음)') + '</b><span class="mid-s">예산 ' + fmtMan(mp) +
+        (mc ? ' · 확정 ' + fmtMan(mc) : '') + '</span>' +
+        '<button type="button" class="lnk" data-act="addLine" data-key="' + esc(key) + '">＋ 항목</button></div><ul class="bls">');
+      inMid.forEach(function (b) { budRow(h, b, calc.byLine[b.id], ctx, groups); });
+      h.push('</ul>');
+      if (addLineFor === key) {
+        h.push('<form class="edrec addline" data-form="bud-add" data-big="' + esc(big) + '" data-mid="' + esc(mid) + '">' +
+          '<div class="grid">' + fld('f-bud-' + key + '-name', 'name', '항목 이름', 'text', '', ' maxlength="40" required placeholder="새 항목 이름"') +
+          wonFld('f-bud-' + key + '-plan', 'plan', '예산 (선택)', 0, false) + '</div>' +
+          '<div class="row"><button class="btn pri" type="submit">더하기</button><button class="btn" type="button" data-act="cancelLine">닫기</button></div></form>');
+      }
+      h.push('</div>');
+    });
+    h.push('</section>');
+  });
+
+  // 항목에 붙지 않은 계약 · 지출
+  if (calc.noLine.cts.length || calc.orphans.length) {
+    h.push('<section class="card warnc" id="nobud"><p class="card-h">예산 항목이 없는 돈</p>' +
+      '<p class="mini">예산 항목을 정하지 않았거나 항목이 지워진 계약·지출입니다. 셈에는 그대로 들어갑니다. 고치기에서 항목을 고르면 그 줄로 옮겨집니다.</p><ul class="pays">');
+    calc.noLine.cts.forEach(function (x) {
+      h.push('<li class="pay"><span>📝</span><div class="pay-m"><span>' + esc(x.c.name) + '</span><b>' + fmtWon(x.n.cost) + '</b>' +
+        '<span class="pay-s">계약 · 낸 돈 ' + fmtWon(x.n.paid) + '</span></div>' +
+        '<span class="acts"><button type="button" class="lnk" data-act="gotoCt" data-ct="' + esc(x.c.id) + '">계약 보기</button></span></li>');
+    });
+    calc.orphans.forEach(function (p) { payRow(h, p, today, groups, lines, true); });
+    h.push('</ul></section>');
+  }
+
+  if (addLineFor === '*') {
+    h.push('<form class="card" data-form="bud-add"><p class="card-h">새 분류·항목 더하기</p><div class="grid">' +
+      fld('f-bud-new-big', 'big', '대분류', 'text', '', ' maxlength="20" list="dl-bigs" placeholder="고르거나 새로 적기"') +
+      fld('f-bud-new-mid', 'mid', '중분류', 'text', '', ' maxlength="20" list="dl-mids" placeholder="고르거나 새로 적기"') +
+      fld('f-bud-new-name', 'name', '항목 이름', 'text', '', ' maxlength="40" required placeholder="새 항목 이름"') +
+      wonFld('f-bud-new-plan', 'plan', '예산 (선택)', 0, false) + '</div>' +
+      '<div class="row"><button class="btn pri" type="submit">더하기</button><button class="btn" type="button" data-act="cancelLine">닫기</button></div></form>' +
+      '<datalist id="dl-bigs">' + bigs.map(function (x) { return '<option value="' + esc(x) + '">'; }).join('') + '</datalist>' +
+      '<datalist id="dl-mids">' + Object.keys(mids).reduce(function (a, k) { return a.concat(mids[k]); }, [])
+        .map(function (x) { return '<option value="' + esc(x) + '">'; }).join('') + '</datalist>');
+  } else {
+    h.push('<div class="row add-ct"><button class="btn" type="button" data-act="addLine" data-key="*">＋ 새 분류·항목 더하기</button></div>');
+  }
+  h.push('<p class="mini">예산 칸에 바로 적으면 저장됩니다(예: <b>50만</b>, <b>1억 2천만</b>). 항목 이름을 누르면 지출을 적거나 항목을 고칠 수 있어요. ' +
+    '「확정」은 계약 금액과 적어 둔 지출을 더한 값, 「낸 돈」은 그 가운데 이미 낸 것입니다.</p>');
+}
+
+function budRow(h, b, t, ctx, groups) {
+  var open = !!openLines[b.id];
+  var rest = b.plan - t.committed, n = t.cts.length + t.pays.length;
+  var cell = b.plan ? b.plan.toLocaleString('ko-KR') : '';
+  h.push('<li class="bl' + (b.plan && rest < 0 ? ' over' : '') + (open ? ' open' : '') + '">');
+  if (editRec && editRec.c === 'bud' && editRec.id === b.id) {
+    h.push('<form class="edrec" data-form="bud-edit" data-id="' + esc(b.id) + '">' + editWarn('bud', b) + '<div class="grid">' +
+      fld('f-buded-' + b.id + '-big', 'big', '대분류', 'text', b.big, ' maxlength="20"') +
+      fld('f-buded-' + b.id + '-mid', 'mid', '중분류', 'text', b.mid, ' maxlength="20"') +
+      fld('f-buded-' + b.id + '-name', 'name', '항목 이름', 'text', b.name, ' maxlength="40" required') +
+      wonFld('f-buded-' + b.id + '-plan', 'plan', '예산', b.plan, false) +
+      fld('f-buded-' + b.id + '-memo', 'memo', '메모 (선택)', 'text', b.memo, ' maxlength="200"', true) + '</div>' +
+      '<div class="row"><button class="btn pri" type="submit">저장</button><button class="btn" type="button" data-act="cancelRec">취소</button></div></form></li>');
+    return;
+  }
+  h.push('<button type="button" class="bl-n" data-line="' + esc(b.id) + '" aria-expanded="' + open + '">' +
+    '<span class="caret">' + (open ? '▾' : '▸') + '</span>' + esc(b.name) + (n ? ' <small>(' + n + ')</small>' : '') + '</button>' +
+    '<input class="cell" id="plan-' + esc(b.id) + '" data-plan="' + esc(b.id) + '" data-orig="' + esc(cell) + '" value="' + esc(cell) + '"' +
+    ' inputmode="text" placeholder="예산" aria-label="' + esc(b.name) + ' 예산">');
+  if (t.committed || b.plan) {
+    h.push('<div class="bl-s">' + (t.committed ? '확정 ' + fmtMan(t.committed) + (t.paid ? ' · 낸 돈 ' + fmtMan(t.paid) : '') : '아직 확정 없음') +
+      (b.plan ? ' · <span class="' + (rest < 0 ? 'warn-t' : 'ok-t') + '">' + (rest < 0 ? '초과 ' + fmtMan(-rest) : '남음 ' + fmtMan(rest)) + '</span>' : '') + '</div>');
+  }
+  if (open) {
+    h.push('<div class="bl-d">');
+    if (b.memo) h.push('<div class="note">' + esc(b.memo) + '</div>');
+    if (t.cts.length || t.pays.length) {
+      h.push('<ul class="pays">');
+      t.cts.forEach(function (x) {
+        h.push('<li class="pay"><span>📝</span><div class="pay-m"><span>' + esc(x.c.name) + '</span><b>' + fmtWon(x.n.cost) + '</b>' +
+          '<span class="pay-s">계약 · 낸 돈 ' + fmtWon(x.n.paid) + (x.c.vendor ? ' · ' + esc(x.c.vendor) : '') + '</span></div>' +
+          '<span class="acts"><button type="button" class="lnk" data-act="gotoCt" data-ct="' + esc(x.c.id) + '">계약 보기</button></span></li>');
+      });
+      t.pays.forEach(function (p) { payRow(h, p, ctx.today, groups, ctx.v.recs.bud, false); });
+      h.push('</ul>');
+    }
+    if (addPayBud === b.id) {
+      h.push('<form class="edrec" data-form="pay-add" data-bud="' + esc(b.id) + '"><p class="card-h">지출 적기 — ' + esc(b.name) + '</p>' +
+        payFields('f-payb-' + b.id + '-', { paid: true, by: lsGet('sh-lastby') || '', date: ctx.todayStr }, groups, null) +
+        '<div class="row"><button class="btn pri" type="submit">적기</button><button class="btn" type="button" data-act="cancelPayBud">닫기</button></div></form>');
+    } else {
+      h.push('<div class="row"><button class="btn" type="button" data-act="addPayBud" data-bud="' + esc(b.id) + '">＋ 지출 적기</button>' +
+        '<button type="button" class="lnk" data-edrec="bud:' + esc(b.id) + '">항목 고치기</button>' +
+        (n ? '' : dropBtn('bud', b.id)) + '</div>');
+      if (n) h.push('<p class="mini">계약·지출이 걸려 있는 항목은 지울 수 없습니다. 먼저 옮기거나 지우세요.</p>');
+    }
+    h.push('</div>');
+  }
+  h.push('</li>');
+}
+
+/** 지출 한 줄 — 계약 안 · 예산 항목 안 · 「항목 없는 돈」 에서 함께 쓴다 */
+function payRow(h, p, today, groups, lines, showWhere) {
+  if (editRec && editRec.c === 'pay' && editRec.id === p.id) {
+    var needBud = !p.ct;
+    h.push('<li class="pay"><form class="edrec" data-form="pay-edit" data-id="' + esc(p.id) + '"' + (p.ct ? ' data-ct="' + esc(p.ct) + '"' : '') + '>' +
+      editWarn('pay', p) + payFields('f-payed-' + p.id + '-', p, groups, needBud ? lines : null) +
+      '<div class="row"><button class="btn pri" type="submit">저장</button><button class="btn" type="button" data-act="cancelRec">취소</button></div></form></li>');
+    return;
+  }
+  var dn = ddayOf(p.date, today);
+  h.push('<li class="pay' + (p.paid ? ' paid' : '') + '"><input type="checkbox" data-paytoggle="' + esc(p.id) + '"' + (p.paid ? ' checked' : '') +
+    ' aria-label="낸 것으로 표시">' +
+    '<div class="pay-m"><span>' + esc(p.label || '지출') + '</span><b>' + fmtWon(p.amount) + '</b>' +
+    '<span class="pay-s">' + (p.date ? shortDate(p.date) : '날짜 없음') + (p.paid ? ' 냄' : (dn !== null && dn < 0 ? ' <span class="warn-t">· 날짜 지남</span>' : ' 낼 차례')) +
+    (p.by ? ' · ' + esc(p.by) : '') + '</span>' +
+    (p.memo ? '<span class="pay-s">' + esc(p.memo) + '</span>' : '') + '</div>' +
+    '<span class="acts"><button type="button" class="lnk" data-edrec="pay:' + esc(p.id) + '">고치기</button>' + dropBtn('pay', p.id) + '</span></li>');
+}
+
+/* ── 📝 계약 ── */
+function ctFields(pre, x, lines) {
+  return '<div class="grid">' +
+    fld(pre + 'name', 'name', '계약 내용', 'text', x.name, ' maxlength="80" required placeholder="예: 기본 패키지"', true) +
+    selectFld(pre + 'bud', 'bud', '예산 항목', budOptions(lines, x.bud, '(항목 없음)'), false) +
+    fld(pre + 'vendor', 'vendor', '업체 (선택)', 'text', x.vendor, ' maxlength="60"') +
+    fld(pre + 'date', 'date', '계약일 (선택)', 'date', x.date) +
+    wonFld(pre + 'total', 'total', '총액 (선택)', x.total, false) +
+    fld(pre + 'memo', 'memo', '메모 (선택)', 'text', x.memo, ' maxlength="300" placeholder="예: 환불 규정 · 추가 비용"', true) +
+    '</div>';
+}
+/** 지출 칸 — lines 를 주면 「예산 항목」 고르기를 함께 그린다(계약에 붙지 않은 지출을 고칠 때) */
+function payFields(pre, x, groups, lines) {
+  return '<div class="grid">' +
+    fld(pre + 'label', 'label', '내용', 'text', x.label, ' maxlength="40" list="dl-labels" placeholder="예: 계약금"') +
+    wonFld(pre + 'amount', 'amount', '금액', x.amount, true) +
+    fld(pre + 'date', 'date', '날짜 (낼 날·낸 날)', 'date', x.date) +
+    selectFld(pre + 'by', 'by', '지출 방법', methodOptions(groups, x.by || ''), false) +
+    (lines ? selectFld(pre + 'bud', 'bud', '예산 항목', budOptions(lines, x.bud, '(골라 주세요)'), true) : '') +
+    '<label class="chk"><input type="checkbox" id="' + esc(pre + 'paid') + '" name="paid" data-keep' + (x.paid ? ' checked' : '') + '> 이미 냈어요</label>' +
+    fld(pre + 'memo', 'memo', '메모 (선택)', 'text', x.memo, ' maxlength="100" placeholder="예: 카드 할부 3개월"', true) +
+    '</div>' +
+    '<datalist id="dl-labels">' + ['계약금', '중도금', '잔금', '추가금', '전액'].map(function (c) { return '<option value="' + c + '">'; }).join('') + '</datalist>';
+}
+
+function renderMoney(h, ctx) {
+  var v = ctx.v, meta = ctx.meta, today = ctx.today;
+  var calc = moneyCalc(v), groups = methodGroups(meta), lines = v.recs.bud;
+  var budOf = {};
+  lines.forEach(function (b) { budOf[b.id] = b; });
+
+  var cost = 0, paid = 0;
+  v.recs.ct.forEach(function (c) { var n = ctNums(c, calc.paysOf[c.id]); cost += n.cost; paid += n.paid; });
+  h.push('<p class="mini lead">계약 ' + v.recs.ct.length + '건 · 비용 <b>' + fmtWon(cost) + '</b> · 낸 돈 <b>' + fmtWon(paid) + '</b> · 앞으로 낼 돈 <b>' + fmtWon(cost - paid) + '</b>' +
+    ' — 예산과 견주어 보려면 📊 예산 탭으로.</p>');
+
+  // 낼 차례가 가까운 지출 (계약에 붙은 것과 바로 적은 것 모두)
+  var soon = v.recs.pay.filter(function (p) { return !p.paid && p.date; })
+    .sort(function (a, b) { return a.date < b.date ? -1 : a.date > b.date ? 1 : 0; }).slice(0, 6);
+  if (soon.length) {
+    var ctName = {};
+    v.recs.ct.forEach(function (c) { ctName[c.id] = c.name; });
+    h.push('<div class="card"><p class="card-h">다가오는 지출</p><ul class="soon">');
+    soon.forEach(function (p) {
+      var where = p.ct ? ctName[p.ct] || '(지워진 계약)' : (budOf[p.bud] ? budOf[p.bud].name : '(항목 없음)');
+      h.push('<li><span>' + shortDate(p.date) + ddayBadge(ddayOf(p.date, today)) + '</span><span>' + esc(where) + ' · ' +
+        esc(p.label || '지출') + (p.by ? ' · ' + esc(p.by) : '') + '</span><b>' + fmtWon(p.amount) + '</b></li>');
+    });
+    h.push('</ul></div>');
+  }
+
+  if (addCtOpen) {
+    h.push('<form class="card" data-form="ct-add"><p class="card-h">📝 계약 더하기</p>' + ctFields('f-ct-', {}, lines) +
+      '<div class="row"><button class="btn pri" type="submit">더하기</button><button class="btn" type="button" data-act="addCt">닫기</button></div></form>');
+  } else {
+    h.push('<div class="row add-ct"><button class="btn pri" type="button" data-act="addCt">＋ 계약 더하기</button></div>');
+  }
+  if (!v.recs.ct.length) h.push('<p class="mini empty">아직 적어 둔 계약이 없습니다. 계약을 더한 뒤 그 아래에 계약금·잔금 같은 지출을 적어 보세요.</p>');
+
+  var cts = v.recs.ct.slice().sort(function (a, b) {
+    var x = (a.date || '9999') + a.name, y = (b.date || '9999') + b.name;
+    return x < y ? -1 : x > y ? 1 : 0;
+  });
+  cts.forEach(function (c) { renderContract(h, c, calc.paysOf[c.id], today, groups, budOf, lines); });
+
+  var ctOrphans = calc.orphans.filter(function (p) { return p.ct; });
+  if (ctOrphans.length) {
+    h.push('<section class="card warnc" id="noct"><p class="card-h">어느 계약인지 알 수 없는 지출</p>' +
+      '<p class="mini">시트에서 계약 줄을 지웠거나 계약 아이디가 바뀐 것 같습니다. 필요 없으면 지우세요.</p><ul class="pays">');
+    ctOrphans.forEach(function (p) { payRow(h, p, today, groups, lines, true); });
+    h.push('</ul></section>');
+  }
+}
+
+function renderContract(h, c, pays, today, groups, budOf, lines) {
+  var n = ctNums(c, pays);
+  pays = pays.slice().sort(function (a, b) {
+    var x = (a.date || '9999'), y = (b.date || '9999');
+    return x < y ? -1 : x > y ? 1 : 0;
+  });
+  h.push('<section class="card ct" id="ct-' + esc(c.id) + '">');
+  if (editRec && editRec.c === 'ct' && editRec.id === c.id) {
+    h.push('<form class="edrec" data-form="ct-edit" data-id="' + esc(c.id) + '">' + editWarn('ct', c) + ctFields('f-cted-' + c.id + '-', c, lines) +
+      '<div class="row"><button class="btn pri" type="submit">저장</button><button class="btn" type="button" data-act="cancelRec">취소</button></div></form>');
+  } else {
+    var b = budOf[c.bud];
+    h.push('<div class="ct-head">' + (b ? '<span class="tag">' + esc(budPath(b)) + '</span>' : '<span class="tag t2">항목 없음</span>') +
+      '<h3>' + esc(c.name) + '</h3><span class="ct-v">' + esc([c.vendor, c.date ? shortDate(c.date) + ' 계약' : ''].filter(Boolean).join(' · ')) + '</span>' +
+      '<span class="acts"><button type="button" class="lnk" data-edrec="ct:' + esc(c.id) + '">고치기</button>' +
+      dropBtn('ct', c.id, pays.length ? ' (지출 ' + pays.length + '건도 함께)' : '') + '</span></div>');
+    h.push('<div class="ct-nums">' + (c.total ? '<span>총액 <b>' + fmtWon(c.total) + '</b></span>' : '') +
+      (pays.length ? '<span>적어 둔 지출 <b>' + fmtWon(n.plan) + '</b></span>' : '') +
+      '<span>낸 돈 <b>' + fmtWon(n.paid) + '</b></span><span>남은 돈 <b>' + fmtWon(n.left) + '</b></span></div>' +
+      '<div class="bar"><i style="width:' + (n.cost ? Math.round(n.paid / n.cost * 100) : 0) + '%"></i></div>');
+    if (c.total && n.plan !== c.total) {
+      h.push('<p class="mini">적어 둔 지출을 다 더하면 ' + fmtWon(n.plan) + ' — 총액보다 ' + fmtWon(Math.abs(c.total - n.plan)) +
+        (n.plan < c.total ? ' 적습니다. 아직 적지 않은 지출이 있나요?' : ' 많습니다. 총액을 고쳐야 할까요?') + '</p>');
+    }
+    if (c.memo) h.push('<div class="note">' + esc(c.memo) + '</div>');
+  }
+
+  h.push('<ul class="pays">');
+  pays.forEach(function (p) { payRow(h, p, today, groups, lines, false); });
+  h.push('</ul>');
+
+  if (addPayFor === c.id) {
+    h.push('<form class="edrec" data-form="pay-add" data-ct="' + esc(c.id) + '"><p class="card-h">지출 더하기</p>' +
+      payFields('f-pay-' + c.id + '-', { by: lsGet('sh-lastby') || '' }, groups, null) +
+      '<div class="row"><button class="btn pri" type="submit">더하기</button><button class="btn" type="button" data-act="cancelPay">닫기</button></div></form>');
+  } else {
+    h.push('<div class="row"><button class="btn" type="button" data-act="addPay" data-ct="' + esc(c.id) + '">＋ 지출 더하기</button></div>');
+  }
+  h.push('</section>');
 }
 
 function showSync() {
@@ -645,18 +1536,106 @@ function newId() {
 
 document.addEventListener('change', function (e) {
   var t = e.target;
-  if (!srv || t.type !== 'checkbox' || !t.dataset.id) return;
-  push({ k: 'done', id: t.dataset.id, v: t.checked });
+  if (!srv || t.type !== 'checkbox') return;
+  if (t.dataset.id) push({ k: 'done', id: t.dataset.id, v: t.checked });
+  else if (t.dataset.paytoggle) {
+    var p = findRec('pay', t.dataset.paytoggle);
+    if (!p) return;
+    var op = putOp('pay', p.id, { paid: t.checked });
+    // 받지 않을 변경이면 체크가 말없이 튕겨 나가지 않게 알린다
+    if (!wouldChange(op)) { toast('바뀌지 않았습니다 — 고치기에서 확인해 주세요'); render(); return; }
+    push(op);
+  }
 });
+
+/*
+ * 예산표의 예산 칸 — 칸을 떠날 때(다른 곳을 누르거나 Tab·Enter) 저장한다.
+ * change 가 아니라 focusout 을 쓴다: 적는 도중에 상대의 변경이 들어와 화면이 다시 그려지면
+ * 적던 글은 새 칸으로 옮겨지는데(render 의 keep), 새 칸은 손으로 바꾼 적이 없어 change 가 나지 않는다.
+ */
+document.addEventListener('focusout', function (e) {
+  var t = e.target;
+  if (srv && t.hasAttribute && t.hasAttribute('data-plan')) savePlan(t);
+});
+function savePlan(el) {
+  if (rendering || !el.isConnected) return;   // 다시 그리느라 떨어져 나가는 칸 — 적던 글은 새 칸이 이어받는다
+  var id = el.getAttribute('data-plan'), raw = el.value;
+  if (raw === el.getAttribute('data-orig')) return;   // 손대지 않았다
+  var n = parseWon(raw);
+  if (isNaN(n)) { toast('알아볼 수 없는 금액입니다 — 예: 50만, 1억 2천만'); el.value = el.getAttribute('data-orig'); return; }
+  var b = findRec('bud', id);
+  if (!b) return;
+  var shown = n ? n.toLocaleString('ko-KR') : '';
+  el.value = shown;
+  el.setAttribute('data-orig', shown);     // 저장한 값으로 맞춰 두어야 다시 그릴 때 「적다 만 글」로 붙잡히지 않는다
+  if (n !== b.plan) push(putOp('bud', id, { plan: n }), true);
+}
+document.addEventListener('keydown', function (e) {
+  if (e.key === 'Enter' && e.target.hasAttribute && e.target.hasAttribute('data-plan')) e.target.blur();
+});
+
+// 금액 칸 — 적는 대로 「= 3,300,000원」 처럼 어떻게 읽었는지 보여 준다
+document.addEventListener('input', function (e) {
+  if (e.target.hasAttribute && e.target.hasAttribute('data-won')) updHint(e.target);
+  markTouched(e.target);
+});
+document.addEventListener('change', function (e) { markTouched(e.target); });
+function markTouched(el) {
+  if (el && el.id && el.closest && el.closest('form.edrec[data-id]')) touched[el.id] = 1;
+}
+
+function setTab(t) {
+  tab = t;
+  lsSet('sh-tab', t);
+  try { history.replaceState(null, '', '#' + t); } catch (x) {}
+  editRec = null; touched = {}; armed = null;
+  render();
+  window.scrollTo(0, 0);
+}
 
 document.addEventListener('click', function (e) {
   var b = e.target.closest ? e.target.closest('button') : null;
   if (!b || !srv) return;
+  if (b.dataset.tab) { setTab(b.dataset.tab); return; }
+  if (b.dataset.line) {                     // 예산 항목 펼치기·접기
+    var lid = b.dataset.line;
+    if (openLines[lid]) { delete openLines[lid]; if (addPayBud === lid) addPayBud = null; } else openLines[lid] = 1;
+    render();
+    return;
+  }
+  if (b.dataset.edrec) {
+    var pr = b.dataset.edrec.split(':'), r = findRec(pr[0], pr[1]);
+    if (!r) return;
+    var sr = srvRec(pr[0], pr[1]);
+    editRec = { c: pr[0], id: pr[1], mt: sr ? sr.mt : 0 };
+    touched = {};
+    armed = null;
+    render();
+    var first = document.querySelector('form[data-id="' + pr[1] + '"] input:not([type=checkbox])');
+    if (first) first.focus();
+    return;
+  }
+  if (b.dataset.drop) {
+    var key = b.dataset.drop;
+    // 두 번 누르기가 너무 빠르면(두 번 탭·더블 클릭) 확인으로 치지 않는다
+    if (armed && armed.key === key && Date.now() - armed.since < 600) return;
+    if (armed && armed.key === key && armed.until > Date.now()) {
+      armed = null;
+      var q = key.split(':');
+      if (editRec && editRec.id === q[1]) editRec = null;
+      push({ k: 'drop', c: q[0], id: q[1] });
+    } else {
+      armed = { key: key, since: Date.now(), until: Date.now() + 5000 };
+      render();
+      setTimeout(function () { if (armed && armed.key === key && armed.until <= Date.now()) { armed = null; render(); } }, 5100);
+    }
+    return;
+  }
   if (b.dataset.view) {
-    view = b.dataset.view; lsSet(K.view, view); render();
+    view_ = b.dataset.view; lsSet(K.view, view_); render();
   } else if (b.dataset.edit) {
     editing = b.dataset.edit;
-    var cur = current().filter(function (x) { return x.id === editing; })[0];
+    var cur = view().items.filter(function (x) { return x.id === editing; })[0];
     editBase = cur ? { t: cur.t, n: cur.n } : null;
     render();
     var t = document.getElementById('ed-t-' + editing);
@@ -668,14 +1647,148 @@ document.addEventListener('click', function (e) {
     var a = b.dataset.act;
     if (a === 'cancel') { editing = null; editBase = null; render(); }
     else if (a === 'restoreAll' || a === 'revertAll') push({ k: a });
-    else if (a === 'refresh') { retryMs = 0; schedule(0); }
+    else if (a === 'refresh') { retryMs = 0; clearTimeout(timer); sync(true); }
     else if (a === 'skipName') { askName = false; lsSet(K.nameSkip, '1'); render(); }
     else if (a === 'rename') { askName = true; render(); var n = document.getElementById('name-in'); if (n) { n.value = me; n.focus(); } }
     else if (a === 'logout') { queue.length ? toast('저장하는 중입니다. 잠시 뒤에 잠가 주세요.') : lock(''); }
     else if (a === 'mergeOld') mergeOld();
     else if (a === 'dropOld') { lsDel(K.old); render(); }
+    else if (a === 'cancelRec') { editRec = null; touched = {}; render(); }
+    else if (a === 'addCt') { if (addCtOpen) forgetForm(b.closest('form')); addCtOpen = !addCtOpen; render(); if (addCtOpen) focusIn('form[data-form="ct-add"]'); }
+    else if (a === 'addPay') { addPayFor = b.dataset.ct; render(); focusIn('form[data-form="pay-add"]'); }
+    else if (a === 'cancelPay') { forgetForm(b.closest('form')); addPayFor = null; render(); }
+    else if (a === 'togglePast') { showPast = !showPast; render(); }
+    // 가리키는 계약·항목이 없으면(지워졌거나 정하지 않음) 「…없는 돈」 상자로 간다
+    else if (a === 'gotoCt') { setTab('money'); scrollToId(document.getElementById('ct-' + b.dataset.ct) ? 'ct-' + b.dataset.ct : 'noct'); }
+    else if (a === 'gotoBud') {
+      var gb = b.dataset.bud, has = gb && findRec('bud', gb);
+      if (has) openLines[gb] = 1;
+      setTab('budget');
+      scrollToId(has ? 'plan-' + gb : 'nobud');
+    }
+    else if (a === 'addLine') { addLineFor = b.dataset.key; render(); focusIn('form[data-form="bud-add"]'); }
+    else if (a === 'cancelLine') { forgetForm(b.closest('form')); addLineFor = null; render(); }
+    else if (a === 'addPayBud') { addPayBud = b.dataset.bud; openLines[b.dataset.bud] = 1; render(); focusIn('form[data-bud="' + b.dataset.bud + '"]'); }
+    else if (a === 'cancelPayBud') { forgetForm(b.closest('form')); addPayBud = null; render(); }
   }
 });
+
+function scrollToId(id) {
+  var el = document.getElementById(id);
+  if (el && el.scrollIntoView) el.scrollIntoView({ block: 'center' });
+}
+
+function focusIn(sel) {
+  var el = document.querySelector(sel + ' input:not([type=checkbox])');
+  if (el) el.focus();
+}
+
+/** 기록 폼 읽기 — 틀린 칸이 있으면 알려 주고 null */
+function readForm(f, c) {
+  var out = {}, bad = null;
+  REC_SCHEMA[c].forEach(function (s) {
+    var el = f.elements.namedItem(s[0]);
+    if (!el) return;
+    if (s[1] === 'bool') out[s[0]] = el.checked;
+    else if (s[1] === 'won') {
+      var n = parseWon(el.value);
+      if (isNaN(n)) { bad = bad || el; return; }
+      out[s[0]] = n;
+    } else out[s[0]] = el.value;
+  });
+  var need = REC_SCHEMA[c].filter(function (s) { return s[2] && s[1] !== 'ref'; });
+  need.forEach(function (s) {
+    var el = f.elements.namedItem(s[0]);
+    if (el && !(s[1] === 'won' ? out[s[0]] > 0 : clip_(String(out[s[0]] || ''), 300))) bad = bad || el;
+  });
+  if (bad) { bad.focus(); toast(bad.closest('label').querySelector('span').textContent + ' 칸을 확인해 주세요'); return null; }
+  return out;
+}
+
+/** 칸의 지금 값 · 처음 그렸을 때의 값 (체크박스는 참거짓, 고르기는 처음 골라 둔 것) */
+function fieldVal(el) { return el.type === 'checkbox' ? !!el.checked : el.value; }
+function fieldDefault(el) {
+  if (el.type === 'checkbox') return !!el.defaultChecked;
+  if (el.tagName !== 'SELECT') return el.defaultValue;
+  for (var i = 0; i < el.options.length; i++) if (el.options[i].defaultSelected) return el.options[i].value;
+  return el.options.length ? el.options[0].value : '';
+}
+
+/**
+ * 더하기 폼을 처음 상태로 되돌린다 — 날짜·지출 방법처럼 이어서 쓰기 좋은 칸은 남긴다.
+ * 비우지 않고 「처음 값」으로 되돌린다: 「이미 냈어요」 처럼 처음부터 켜져 있던 칸이 꺼진 채로,
+ * 고르기 칸이 앞에서 고른 예산 항목인 채로 다음 더하기에 남지 않게.
+ */
+function clearForm(f, keepNames) {
+  Array.prototype.forEach.call(f.querySelectorAll('input, select'), function (el) {
+    if (keepNames.indexOf(el.name) >= 0) return;
+    var d = fieldDefault(el);
+    if (el.type === 'checkbox') el.checked = d; else el.value = d;
+    delete drafts[el.id];
+  });
+}
+
+function submitRec(f) {
+  var kind = f.dataset.form, c = kind.split('-')[0], isAdd = /-add$/.test(kind);
+  var vals = readForm(f, c);
+  if (!vals) return;
+  if (c === 'pay' && isAdd) {
+    if (f.dataset.ct) vals.ct = f.dataset.ct;
+    else if (f.dataset.bud && !vals.bud) vals.bud = f.dataset.bud;
+  }
+  if (c === 'bud' && isAdd) {               // 중분류 아래 「＋ 항목」 은 대분류·중분류가 정해져 있다
+    if (!f.elements.namedItem('big')) vals.big = f.dataset.big || '';
+    if (!f.elements.namedItem('mid')) vals.mid = f.dataset.mid || '';
+  }
+  if (c === 'pay' && vals.by) lsSet('sh-lastby', vals.by);   // 다음 지출 칸에 같은 지출 방법을 미리 골라 둔다
+  var id = isAdd ? newId() : f.dataset.id;
+  var base = isAdd ? null : findRec(c, id);
+  if (!isAdd && !base) { editRec = null; render(); toast('고치던 기록을 상대가 지웠습니다'); return; }
+  if (isAdd) {
+    var addOp = putOp(c, id, vals, true);
+    // 서버와 같은 규칙(공유 규칙)으로 미리 해 본다 — 받지 않을 값이면 칸을 그대로 두고 알린다
+    if (!wouldChange(addOp)) { toast('저장되지 않았습니다 — 칸을 확인해 주세요'); return; }
+    clearForm(f, c === 'ev' ? ['date'] : c === 'pay' ? ['by', 'date'] : []);
+    if (c === 'ct') addCtOpen = false;
+    if (c === 'pay') { addPayFor = null; addPayBud = null; }
+    if (c === 'bud') addLineFor = null;
+    push(addOp);
+    toast('더했습니다');
+    return;
+  }
+  // 고치기 — 손댄 칸만 바꾼다. 그사이 상대가 다른 칸을 고쳤어도 그 값은 그대로 남는다
+  var over = {}, n = 0;
+  REC_SCHEMA[c].forEach(function (s) {
+    var el = f.elements.namedItem(s[0]);
+    if (el && touched[el.id] && Object.prototype.hasOwnProperty.call(vals, s[0])) { over[s[0]] = vals[s[0]]; n++; }
+  });
+  var editOp = n ? putOp(c, id, over) : null;
+  if (editOp && !wouldChange(editOp)) {
+    // 바꾼 칸이 처음 값과 같았거나(바뀐 것 없음) 받을 수 없는 값 — 칸에 따라 알린다
+    var same = REC_SCHEMA[c].every(function (sc) { return !Object.prototype.hasOwnProperty.call(over, sc[0]) || over[sc[0]] === base[sc[0]]; });
+    if (!same) { toast('저장되지 않았습니다 — 칸을 확인해 주세요'); return; }
+    editOp = null;
+  }
+  clearForm(f, []);
+  editRec = null; touched = {};
+  if (!editOp) { render(); return; }
+  push(editOp);
+  toast('고쳤습니다');
+}
+
+/** 이 변경을 지금 화면 상태에 해 보면 무엇이 바뀌는가 (공유 규칙 그대로) */
+function wouldChange(op) {
+  var v = view();
+  return applyOps_(v.items, srv.phases, [op], me, Date.now(), v.recs, {});
+}
+
+/** 닫는 더하기 칸의 적다 만 글은 버린다 */
+function forgetForm(f) {
+  if (!f) return;
+  Array.prototype.forEach.call(f.querySelectorAll('[id]'), function (el) { delete drafts[el.id]; });
+  // 화면에서도 걷어 낸다 — 남겨 두면 다시 그리기 직전에 그 칸의 글을 또 붙잡아 버린다
+  if (f.parentNode) f.parentNode.removeChild(f);
+}
 
 document.addEventListener('submit', function (e) {
   var f = e.target;
@@ -686,6 +1799,7 @@ document.addEventListener('submit', function (e) {
     return;
   }
   if (!srv) return;
+  if (f.dataset.form) { submitRec(f); return; }
   if (f.id === 'nameForm') {
     me = clip_(document.getElementById('name-in').value, 20);
     if (me) lsSet(K.name, me); else lsDel(K.name);
@@ -712,12 +1826,17 @@ document.addEventListener('submit', function (e) {
 });
 
 document.addEventListener('keydown', function (e) {
-  if (e.key === 'Escape' && editing) { editing = null; editBase = null; render(); }
+  if (e.key !== 'Escape' || e.isComposing) return;
+  if (editing) { editing = null; editBase = null; render(); }
+  else if (editRec || armed) { editRec = null; armed = null; touched = {}; render(); }
 });
 
 // 다른 앱을 보다가 돌아오면 곧바로 새로 확인한다
 document.addEventListener('visibilitychange', function () {
-  if (!document.hidden && pw && srv) schedule(0);
+  if (!document.hidden && pw && srv) {
+    if (ymd(day0(new Date())) !== lastDay) render();
+    schedule(0);
+  }
 });
 window.addEventListener('online', function () {
   if (pw && srv) { retryMs = 0; schedule(0); }
